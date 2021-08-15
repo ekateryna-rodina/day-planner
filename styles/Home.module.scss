@@ -1,0 +1,51 @@
+.centeredContainer {
+  position: absolute;
+  width: 90%;
+  height: 80%;
+  /* background-color: rgb(40, 16, 40); */
+  background-color: #fff;
+  top: 10%;
+  left: 5%;
+  border-radius: 1rem;
+  box-shadow: 0 0 12px 1px rgba(255, 255, 255, 0.5);
+
+  padding: 2rem;
+
+  .content {
+    display: flex;
+    justify-content: space-between;
+
+    .header {
+      text-align: left;
+      position: relative;
+
+      h2 {
+        margin: 0;
+      }
+
+      .subheader {
+        color: var(--drop-background);
+        font-size: var(--subtitle-font-size);
+
+        margin: 1rem 0;
+        padding: 0.1rem;
+      }
+    }
+
+    .projectsPanel {
+      flex: 1;
+    }
+    .tasksPanel {
+      flex: 2;
+    }
+    .quickTasksPanel {
+      flex: 1;
+    }
+    .projectsPanel,
+    .tasksPanel,
+    .quickTasksPanel {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+}
