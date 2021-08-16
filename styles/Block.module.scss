@@ -1,0 +1,57 @@
+@import "config";
+
+.taskBox {
+  width: 100%;
+  max-width: 20rem;
+  height: max-content;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  margin: 0 0.5rem;
+  padding: 0.5rem;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 0.5rem;
+
+  &.activeDragging {
+    border: 2px solid rgba(0, 0, 0, 0.5);
+  }
+  &.empy {
+    border: 1px dashed rgba(0, 0, 0, 0.1);
+    .task-row {
+      background: rgba(0, 0, 0, 0.1);
+      font-size: 0.7rem;
+      span {
+        margin: auto;
+        color: rgba(0, 0, 0, 0.4);
+      }
+    }
+  }
+  .taskContainer {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    margin-right: 0.5rem;
+  }
+  .blockName {
+    flex: 0 0 30px;
+    background: $dark;
+    border-radius: 5px;
+    padding: 0.1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: var(--dark);
+    color: #fff;
+    text-transform: uppercase;
+    font-size: 0.4rem;
+    letter-spacing: 0.5px;
+
+    span.vertical-text {
+      writing-mode: vertical-rl;
+      text-orientation: sideways;
+    }
+  }
+}

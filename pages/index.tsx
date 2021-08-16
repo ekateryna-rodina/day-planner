@@ -4,6 +4,7 @@ import Hint from "../components/Hint";
 import Project from "../components/Project";
 import SubheaderMenu from "../components/SubheaderMenu";
 import HomeStyles from "../styles/Home.module.scss";
+import { Task } from "../types/task";
 import { http } from "../utils/http";
 
 type Project = {
@@ -33,6 +34,20 @@ export const getStaticProps = async () => {
 
 const Home: NextPage = (props) => {
   const { projects, tasks } = props;
+  const tasksGroupedByBlocks = () => {
+    let blocks: { [key: number]: Task[] } = {};
+    tasks.forEach((task: Task) => {
+      let block = task.block;
+      if (block in blocks) {
+        blocks[block].push(task);
+      } else {
+        blocks[block] = [task];
+      }
+    });
+    return (
+      // return block
+    )
+  };
   return (
     <div>
       <Background />
@@ -55,8 +70,9 @@ const Home: NextPage = (props) => {
           <div className={HomeStyles.tasksPanel}>
             <div className={HomeStyles.header}>
               <h2>Tasks</h2>
-              <div className={HomeStyles.subheader}></div>
+              <div className={HomeStyles.subheader}>September, 14</div>
             </div>
+            <div>{tasksGroupedByBlocks()}</div>
           </div>
           <div className={HomeStyles.quickTasksPanel}>
             <div className={HomeStyles.header}>

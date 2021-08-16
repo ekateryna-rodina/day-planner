@@ -45,6 +45,48 @@
             ]
         }
 
+    ],
+    "tasks": [
+        {
+            "id": "1",
+            "projectName": "Facebook",
+            "description": "Sketch icons concept for the site navigation and homepage design",
+            "logo": "https://drive.google.com/uc?export=view&id=1ZMwugXGtCKtIhrMOK-XN19oasQRVb_7T",
+            "done": false,
+            "className": "blue",
+            "block": 1
+        },
+        {
+            "id": "2",
+            "projectName": "School House",
+            "description": "QA on new web page",
+            "logo": "https://drive.google.com/uc?export=view&id=1qJCq8pl_PqTXC5cm84rce1pjulNCQMoa",
+            "done": false,
+            "className": "pink",
+            "block": 1
+        },
+        {
+            "id": "3",
+            "projectName": "Stamped",
+            "description": "Typography concept to be approved",
+            "logo": "https://drive.google.com/uc?export=view&id=1Nky04Gtn6jdtTEM5810X0JcimbTrtUzg",
+            "done": false,
+            "className": "purple",
+            "block": 2
+        },
+        {
+            "id": "4",
+            "projectName": "Facebook",
+            "description": "Meet with clients to understand their vision better",
+            "logo": "https://drive.google.com/uc?export=view&id=1ZMwugXGtCKtIhrMOK-XN19oasQRVb_7T",
+            "done": false,
+            "className": "blue",
+            "block": 2
+        }
+
+
+
+        
     ]
    }
 }

@@ -19,12 +19,7 @@ const Project = (props: IProjectProps) => {
         <div className={ProjectStyles.avatarSection}>
           {avatarUrls.map((a) => (
             <div className={ProjectStyles.avatar} key={a}>
-              <Img
-                src={a}
-                layout="fill"
-                // width="20"
-                // height="20"
-              />
+              <Img src={a} layout="fill" />
             </div>
           ))}
           <span className={ProjectStyles.addMember}>
