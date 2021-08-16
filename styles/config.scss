@@ -1,11 +1,10 @@
 $bg-grad-main-diag-bottom: #5a3f84;
 $bg-grad-main-diag-middle: #f00841;
-// $bg-grad-main-diag-top-2: #ee4c5;
 $bg-grad-main-diag-top-1: #fd276a;
 $bg-diag-end-1: #0e7bc4;
 $bg-diag-end-3: #c9e5fe;
 $bg-diag-top-4: #fba915;
-$dark: rgba(40, 16, 40, 1);
+$dark: #1d2c61;
 $light: #e0e4f6;
 $primary: #fd2e60;
 $task-vivid-1: #bf2a98;
@@ -13,12 +12,20 @@ $task-vivid-2: #1c9be1;
 $task-vivid-3: #19c4ec;
 $task-vivid-4: #178efc;
 $task-vivid-5: #c92eff;
+$task-vivid-blue: rgba(23, 141, 251, 255);
+$task-vivid-turquoise: rgba(26, 194, 237, 255);
+$task-vivid-purple: rgba(100, 46, 254, 255);
+$task-vivid-pink: rgba(201, 46, 255, 255);
 $project-pastel-1: rgba(204, 229, 255, 255);
 $project-pastel-2: #c48dd6;
-$project-pastel-3: #aacce3;
+$project-pastel-pink: rgba(245, 213, 255, 255);
+$project-pastel-purple: rgba(224, 213, 255, 255);
+$project-pastel-blue: rgba(204, 229, 255, 255);
+$project-pastel-turquise: rgba(208, 244, 252, 255);
 $drop-background: #d2d5df;
 // 	size
 $navbar-height: 3rem;
 // 	fonts
 $subtitle-font-size: 0.7rem;
 $hint-font-size: 0.8rem;
+$project-name-font-size: 0.9rem;

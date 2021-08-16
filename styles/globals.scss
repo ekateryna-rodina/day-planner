@@ -19,3 +19,28 @@ a {
   box-sizing: border-box;
   color: $dark;
 }
+
+.bluePastel {
+  background-color: $project-pastel-blue;
+  span {
+    color: $task-vivid-blue;
+  }
+}
+.purplePastel {
+  background-color: $project-pastel-purple;
+  span {
+    color: $task-vivid-purple;
+  }
+}
+.pinkPastel {
+  background-color: $project-pastel-pink;
+  span {
+    color: $task-vivid-pink;
+  }
+}
+.turquisePastel {
+  background-color: $project-pastel-turquise;
+  span {
+    color: $task-vivid-turquoise;
+  }
+}

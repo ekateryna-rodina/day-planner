@@ -1,11 +1,50 @@
 {
+   "data": {
     "projects": [
         {
         "id": "1",
         "name": "Facebook",
+        "className": "blue",
         "logo": "https://drive.google.com/uc?export=view&id=1mQnLGIjiBgiwodLDrtMAddvCAgEZ-Kd1",
-        "avatarUrls": ["https://drive.google.com/uc?export=view&id=1-JWa5SkqcjTHimp6R9bv3jOQR60J5fZr", "https://drive.google.com/uc?export=view&id=11yQXF50EhlYTsSb1p1uFnshwgUvpaPkD", "https://drive.google.com/uc?export=view&id=1i38YlzgC2KUIOkB0DrbrFbLcI6uqo38k"]
+        "avatarUrls": [
+            "https://drive.google.com/uc?export=view&id=1-JWa5SkqcjTHimp6R9bv3jOQR60J5fZr", 
+            "https://drive.google.com/uc?export=view&id=11yQXF50EhlYTsSb1p1uFnshwgUvpaPkD", 
+            "https://drive.google.com/uc?export=view&id=1i38YlzgC2KUIOkB0DrbrFbLcI6uqo38k"
+        ]
+        },
+        {
+            "id": "2",
+            "name": "Package Plus",
+            "className": "turquise",
+            "logo": "https://drive.google.com/uc?export=view&id=1e6ggyTZ69EqhBho1l97y1LTr793Bd4k0",
+            "avatarUrls": [
+                "https://drive.google.com/uc?export=view&id=1vzPcScVjF8mtsVJwr08FNYf750QsijNQ", 
+                "https://drive.google.com/uc?export=view&id=1i38YlzgC2KUIOkB0DrbrFbLcI6uqo38k"
+            ]
+        },
+        {
+            "id": "3",
+            "name": "Stamped",
+            "className": "purple",
+            "logo": "https://drive.google.com/uc?export=view&id=17e3fKRKMxRyPbHozC97ix04jiCOoHJhW",
+            "avatarUrls": [
+                "https://drive.google.com/uc?export=view&id=1-JWa5SkqcjTHimp6R9bv3jOQR60J5fZr", 
+                "https://drive.google.com/uc?export=view&id=1i38YlzgC2KUIOkB0DrbrFbLcI6uqo38k", 
+                "https://drive.google.com/uc?export=view&id=1NJALicP3vpt15gM29IKtBfwGRlNXHksb"
+            ]
+        },
+        {
+            "id": "4",
+            "name": "School House",
+            "className": "pink",
+            "logo": "https://drive.google.com/uc?export=view&id=1GvB9YlkM0XkiBYWv5eBX16yIykrFocIr",
+            "avatarUrls": [
+                "https://drive.google.com/uc?export=view&id=1NJALicP3vpt15gM29IKtBfwGRlNXHksb", 
+                "https://drive.google.com/uc?export=view&id=1vzPcScVjF8mtsVJwr08FNYf750QsijNQ", 
+                "https://drive.google.com/uc?export=view&id=1i38YlzgC2KUIOkB0DrbrFbLcI6uqo38k"
+            ]
         }
 
     ]
+   }
 }
