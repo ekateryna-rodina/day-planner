@@ -1,3 +1,7 @@
+export type Block = {
+  [key: string]: Task[];
+};
+
 export type Task = {
   id: string;
   logo: string;

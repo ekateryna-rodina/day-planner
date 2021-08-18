@@ -9,7 +9,6 @@ interface IProjectProps {
   logo: string;
 }
 const Project = (props: IProjectProps) => {
-  console.log("here");
   const { className, name, avatarUrls, logo } = props;
   return (
     <div className={`${ProjectStyles.projectBox} ${className}Pastel`}>

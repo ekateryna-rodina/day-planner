@@ -2,14 +2,14 @@ import Img from "next/image";
 import React from "react";
 import BlockStyles from "../styles/Block.module.scss";
 import TaskStyles from "../styles/Task.module.scss";
-import { Task } from "../types/task";
+import { Task as TaskType } from "../types/task";
 
 interface IBlockProps {
-  number: number;
-  tasks: Task[];
+  number: string;
+  tasks: TaskType[];
 }
 
-const Task = (props: Task) => {
+const Task = (props: TaskType) => {
   const { id, logo, projectName, description, className, done } = props;
   return (
     <div className={`${TaskStyles.taskRow} ${className}Vivid`}>
@@ -18,9 +18,9 @@ const Task = (props: Task) => {
       </div>
       <div className={TaskStyles.textContainer}>
         <span className={TaskStyles.projectName}>{projectName}</span>
-        <div>{description}</div>
+        <div className={TaskStyles.description}>{description}</div>
       </div>
-      <input type="checkbox" checked={done} />
+      <input className={TaskStyles.checkbox} type="checkbox" />
     </div>
   );
 };
@@ -30,7 +30,7 @@ const Block = (props: IBlockProps) => {
   return (
     <div className={BlockStyles.taskBox}>
       <div className={BlockStyles.taskContainer}>
-        {tasks.map((t: Task) => (
+        {tasks.map((t: TaskType) => (
           <Task key={t.id} {...t} />
         ))}
       </div>

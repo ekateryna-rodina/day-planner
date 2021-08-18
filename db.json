@@ -5,43 +5,43 @@
         "id": "1",
         "name": "Facebook",
         "className": "blue",
-        "logo": "https://drive.google.com/uc?export=view&id=1mQnLGIjiBgiwodLDrtMAddvCAgEZ-Kd1",
+        "logo": "https://res.cloudinary.com/kariecloud/image/upload/v1629311147/IMAGE_2021-08-11_18_39_43_r0ituj.jpg",
         "avatarUrls": [
-            "https://drive.google.com/uc?export=view&id=1-JWa5SkqcjTHimp6R9bv3jOQR60J5fZr", 
-            "https://drive.google.com/uc?export=view&id=11yQXF50EhlYTsSb1p1uFnshwgUvpaPkD", 
-            "https://drive.google.com/uc?export=view&id=1i38YlzgC2KUIOkB0DrbrFbLcI6uqo38k"
+            "https://res.cloudinary.com/kariecloud/image/upload/v1629311147/IMAGE_2021-08-11_19_31_19_tercal.jpg", 
+            "https://res.cloudinary.com/kariecloud/image/upload/v1629311147/IMAGE_2021-08-11_19_31_47_a9fevj.jpg", 
+            "https://res.cloudinary.com/kariecloud/image/upload/v1629311147/IMAGE_2021-08-11_19_20_37_owk8e6.jpg"
         ]
         },
         {
             "id": "2",
             "name": "Package Plus",
             "className": "turquise",
-            "logo": "https://drive.google.com/uc?export=view&id=1e6ggyTZ69EqhBho1l97y1LTr793Bd4k0",
+            "logo": "https://res.cloudinary.com/kariecloud/image/upload/v1629311147/IMAGE_2021-08-11_20_44_27_v24656.jpg",
             "avatarUrls": [
-                "https://drive.google.com/uc?export=view&id=1vzPcScVjF8mtsVJwr08FNYf750QsijNQ", 
-                "https://drive.google.com/uc?export=view&id=1i38YlzgC2KUIOkB0DrbrFbLcI6uqo38k"
+                "https://res.cloudinary.com/kariecloud/image/upload/v1629311147/IMAGE_2021-08-11_19_20_37_owk8e6.jpg", 
+                "https://res.cloudinary.com/kariecloud/image/upload/v1629311147/IMAGE_2021-08-11_19_28_18_hor5og.jpg"
             ]
         },
         {
             "id": "3",
             "name": "Stamped",
             "className": "purple",
-            "logo": "https://drive.google.com/uc?export=view&id=17e3fKRKMxRyPbHozC97ix04jiCOoHJhW",
+            "logo": "https://res.cloudinary.com/kariecloud/image/upload/v1629311147/IMAGE_2021-08-11_20_44_36_gd0noq.jpg",
             "avatarUrls": [
-                "https://drive.google.com/uc?export=view&id=1-JWa5SkqcjTHimp6R9bv3jOQR60J5fZr", 
-                "https://drive.google.com/uc?export=view&id=1i38YlzgC2KUIOkB0DrbrFbLcI6uqo38k", 
-                "https://drive.google.com/uc?export=view&id=1NJALicP3vpt15gM29IKtBfwGRlNXHksb"
+                "https://res.cloudinary.com/kariecloud/image/upload/v1629311147/IMAGE_2021-08-11_19_31_37_dz8c8r.jpg", 
+                "https://res.cloudinary.com/kariecloud/image/upload/v1629311147/IMAGE_2021-08-11_19_31_19_tercal.jpg", 
+                "https://res.cloudinary.com/kariecloud/image/upload/v1629311147/IMAGE_2021-08-11_19_31_27_tiinsh.jpg"
             ]
         },
         {
             "id": "4",
             "name": "School House",
             "className": "pink",
-            "logo": "https://drive.google.com/uc?export=view&id=1GvB9YlkM0XkiBYWv5eBX16yIykrFocIr",
+            "logo": "https://res.cloudinary.com/kariecloud/image/upload/v1629311147/IMAGE_2021-08-11_20_44_17_gdbbtf.jpg",
             "avatarUrls": [
-                "https://drive.google.com/uc?export=view&id=1NJALicP3vpt15gM29IKtBfwGRlNXHksb", 
-                "https://drive.google.com/uc?export=view&id=1vzPcScVjF8mtsVJwr08FNYf750QsijNQ", 
-                "https://drive.google.com/uc?export=view&id=1i38YlzgC2KUIOkB0DrbrFbLcI6uqo38k"
+                "https://res.cloudinary.com/kariecloud/image/upload/v1629311147/IMAGE_2021-08-11_19_28_18_hor5og.jpg", 
+                "https://res.cloudinary.com/kariecloud/image/upload/v1629311147/IMAGE_2021-08-11_19_31_37_dz8c8r.jpg", 
+                "https://res.cloudinary.com/kariecloud/image/upload/v1629311147/IMAGE_2021-08-11_19_31_47_a9fevj.jpg"
             ]
         }
 
@@ -50,8 +50,8 @@
         {
             "id": "1",
             "projectName": "Facebook",
-            "description": "Sketch icons concept for the site navigation and homepage design",
-            "logo": "https://drive.google.com/uc?export=view&id=1ZMwugXGtCKtIhrMOK-XN19oasQRVb_7T",
+            "description": "Sketch icons concept for the site navigation and homepage design  Sketch icons concept for the site navigation and homepage design Sketch icons concept for the site navigation and homepage design",
+            "logo": "https://res.cloudinary.com/kariecloud/image/upload/v1629311147/IMAGE_2021-08-12_17_36_24_ucrmqi.jpg",
             "done": false,
             "className": "blue",
             "block": 1
@@ -60,7 +60,7 @@
             "id": "2",
             "projectName": "School House",
             "description": "QA on new web page",
-            "logo": "https://drive.google.com/uc?export=view&id=1qJCq8pl_PqTXC5cm84rce1pjulNCQMoa",
+            "logo": "https://res.cloudinary.com/kariecloud/image/upload/v1629311147/IMAGE_2021-08-12_17_43_12_zwupv1.jpg",
             "done": false,
             "className": "pink",
             "block": 1
@@ -69,7 +69,7 @@
             "id": "3",
             "projectName": "Stamped",
             "description": "Typography concept to be approved",
-            "logo": "https://drive.google.com/uc?export=view&id=1Nky04Gtn6jdtTEM5810X0JcimbTrtUzg",
+            "logo": "https://res.cloudinary.com/kariecloud/image/upload/v1629311147/IMAGE_2021-08-12_17_36_13_l7ympp.jpg",
             "done": false,
             "className": "purple",
             "block": 2
@@ -78,7 +78,7 @@
             "id": "4",
             "projectName": "Facebook",
             "description": "Meet with clients to understand their vision better",
-            "logo": "https://drive.google.com/uc?export=view&id=1ZMwugXGtCKtIhrMOK-XN19oasQRVb_7T",
+            "logo": "https://res.cloudinary.com/kariecloud/image/upload/v1629311147/IMAGE_2021-08-12_17_36_24_ucrmqi.jpg",
             "done": false,
             "className": "blue",
             "block": 2

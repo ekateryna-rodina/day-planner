@@ -3,51 +3,37 @@ import Background from "../components/Background";
 import Hint from "../components/Hint";
 import Project from "../components/Project";
 import SubheaderMenu from "../components/SubheaderMenu";
+import TasksByBlocks from "../components/TasksByBlocks";
 import HomeStyles from "../styles/Home.module.scss";
+import { Project as ProjectType } from "../types/project";
 import { Task } from "../types/task";
 import { http } from "../utils/http";
 
-type Project = {
-  id: string;
-  name: string;
-  logo: string;
-  className: string;
-  avatarUrls: string[];
-};
 interface IData {
-  projects: Project[];
+  projects: ProjectType[];
   tasks: {}[];
   quickTasks: {}[];
 }
 export const getStaticProps = async () => {
   let data = await http<IData>("http://localhost:5000/data");
-  const { projects } = data;
+  console.log(data);
+  const { projects, tasks } = data;
   console.log(projects);
   return {
     props: {
       projects,
-      tasks: [],
+      tasks,
       quickTasks: {},
     },
   };
 };
 
+interface IHomeProps {
+  projects: ProjectType[];
+  tasks: Task[];
+}
 const Home: NextPage = (props) => {
   const { projects, tasks } = props;
-  const tasksGroupedByBlocks = () => {
-    let blocks: { [key: number]: Task[] } = {};
-    tasks.forEach((task: Task) => {
-      let block = task.block;
-      if (block in blocks) {
-        blocks[block].push(task);
-      } else {
-        blocks[block] = [task];
-      }
-    });
-    return (
-      // return block
-    )
-  };
   return (
     <div>
       <Background />
@@ -62,7 +48,7 @@ const Home: NextPage = (props) => {
             </div>
             <Hint />
             <div className={HomeStyles.projects}>
-              {projects.map((p: Project) => (
+              {projects.map((p: ProjectType) => (
                 <Project key={p.id} {...p} />
               ))}
             </div>
@@ -72,7 +58,7 @@ const Home: NextPage = (props) => {
               <h2>Tasks</h2>
               <div className={HomeStyles.subheader}>September, 14</div>
             </div>
-            <div>{tasksGroupedByBlocks()}</div>
+            <TasksByBlocks tasks={tasks} />
           </div>
           <div className={HomeStyles.quickTasksPanel}>
             <div className={HomeStyles.header}>

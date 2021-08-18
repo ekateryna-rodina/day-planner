@@ -2,7 +2,7 @@
 
 .taskBox {
   width: 100%;
-  max-width: 20rem;
+  max-width: 30rem;
   height: max-content;
   border: 1px solid rgba(0, 0, 0, 0.1);
   margin: 0 0.5rem;
@@ -34,24 +34,24 @@
     align-items: center;
     margin-right: 0.5rem;
   }
+
   .blockName {
     flex: 0 0 30px;
-    background: $dark;
     border-radius: 5px;
     padding: 0.1rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background: var(--dark);
-    color: #fff;
+    background: $dark;
     text-transform: uppercase;
-    font-size: 0.4rem;
+    font-size: 0.8rem;
     letter-spacing: 0.5px;
 
-    span.vertical-text {
+    span.verticalText {
       writing-mode: vertical-rl;
       text-orientation: sideways;
+      color: #fff;
     }
   }
 }
