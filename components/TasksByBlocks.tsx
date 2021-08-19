@@ -37,6 +37,16 @@ const TasksByBlocks = (props: ITasksByBlocks) => {
       {Object.keys(groupedTasks).map((b) => {
         return _renderBlock(b, groupedTasks[b]);
       })}
+
+      {/* <div className="taskBox empy">
+    <div className="taskContainer">
+      <div className="taskRow"> 
+        <span>Drag and Drop here</p>
+        </div>
+    </div>
+    <div className="blockName"><span className="vertical-text">Block 2</span></div> */}
+
+      {/* </div> */}
     </Fragment>
   );
 };

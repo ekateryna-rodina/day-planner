@@ -2,11 +2,12 @@ import type { NextPage } from "next";
 import Background from "../components/Background";
 import Hint from "../components/Hint";
 import Project from "../components/Project";
+import QuickTasks from "../components/QuickTasks";
 import SubheaderMenu from "../components/SubheaderMenu";
 import TasksByBlocks from "../components/TasksByBlocks";
 import HomeStyles from "../styles/Home.module.scss";
 import { Project as ProjectType } from "../types/project";
-import { Task } from "../types/task";
+import { QuickTask as QuickTaskType, Task } from "../types/task";
 import { http } from "../utils/http";
 
 interface IData {
@@ -16,14 +17,13 @@ interface IData {
 }
 export const getStaticProps = async () => {
   let data = await http<IData>("http://localhost:5000/data");
-  console.log(data);
-  const { projects, tasks } = data;
+  const { projects, tasks, quickTasks } = data;
   console.log(projects);
   return {
     props: {
       projects,
       tasks,
-      quickTasks: {},
+      quickTasks,
     },
   };
 };
@@ -31,9 +31,11 @@ export const getStaticProps = async () => {
 interface IHomeProps {
   projects: ProjectType[];
   tasks: Task[];
+  quickTasks: QuickTaskType[];
 }
 const Home: NextPage = (props) => {
-  const { projects, tasks } = props;
+  const { projects, tasks, quickTasks } = props;
+  console.log(quickTasks);
   return (
     <div>
       <Background />
@@ -64,6 +66,13 @@ const Home: NextPage = (props) => {
             <div className={HomeStyles.header}>
               <h2>Quick Tasks</h2>
               <div className={HomeStyles.subheader}></div>
+            </div>
+            <div className={HomeStyles.quickTasks}>
+              {/* {quickTasks.map((task: QuickTaskType) => (
+                <QuickTask key={task.id} {...task} />
+              ))} */}
+
+              <QuickTasks quickTasks={quickTasks} />
             </div>
           </div>
         </div>

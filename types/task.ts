@@ -11,3 +11,9 @@ export type Task = {
   className: string;
   block: number;
 };
+
+export type QuickTask = {
+  id: string;
+  description: string;
+  done: boolean;
+};

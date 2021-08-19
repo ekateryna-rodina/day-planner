@@ -82,11 +82,24 @@
             "done": false,
             "className": "blue",
             "block": 2
+        }  
+    ],
+    "quickTasks": [
+        {
+            "id": "1",
+            "description": "Quick call to Jason regarding tomorrows presentation Quick call to Jason regarding tomorrows presentation",
+            "done": false
+        },
+        {
+            "id": "2",
+            "description": "Check the mail from Richard Check the mail from RichardCheck the mail from Richard",
+            "done": true
+        },
+        {
+            "id": "3",
+            "description": "Call my mom Call my momCall my mom",
+            "done": false
         }
-
-
-
-        
     ]
    }
 }
