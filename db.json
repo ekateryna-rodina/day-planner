@@ -43,7 +43,50 @@
                 "https://res.cloudinary.com/kariecloud/image/upload/v1629311147/IMAGE_2021-08-11_19_31_37_dz8c8r.jpg", 
                 "https://res.cloudinary.com/kariecloud/image/upload/v1629311147/IMAGE_2021-08-11_19_31_47_a9fevj.jpg"
             ]
-        }
+        },
+        {
+            "id": "1",
+            "name": "Facebook",
+            "className": "blue",
+            "logo": "https://res.cloudinary.com/kariecloud/image/upload/v1629311147/IMAGE_2021-08-11_18_39_43_r0ituj.jpg",
+            "avatarUrls": [
+                "https://res.cloudinary.com/kariecloud/image/upload/v1629311147/IMAGE_2021-08-11_19_31_19_tercal.jpg", 
+                "https://res.cloudinary.com/kariecloud/image/upload/v1629311147/IMAGE_2021-08-11_19_31_47_a9fevj.jpg", 
+                "https://res.cloudinary.com/kariecloud/image/upload/v1629311147/IMAGE_2021-08-11_19_20_37_owk8e6.jpg"
+            ]
+            },
+            {
+                "id": "2",
+                "name": "Package Plus",
+                "className": "turquise",
+                "logo": "https://res.cloudinary.com/kariecloud/image/upload/v1629311147/IMAGE_2021-08-11_20_44_27_v24656.jpg",
+                "avatarUrls": [
+                    "https://res.cloudinary.com/kariecloud/image/upload/v1629311147/IMAGE_2021-08-11_19_20_37_owk8e6.jpg", 
+                    "https://res.cloudinary.com/kariecloud/image/upload/v1629311147/IMAGE_2021-08-11_19_28_18_hor5og.jpg"
+                ]
+            },
+            {
+                "id": "3",
+                "name": "Stamped",
+                "className": "purple",
+                "logo": "https://res.cloudinary.com/kariecloud/image/upload/v1629311147/IMAGE_2021-08-11_20_44_36_gd0noq.jpg",
+                "avatarUrls": [
+                    "https://res.cloudinary.com/kariecloud/image/upload/v1629311147/IMAGE_2021-08-11_19_31_37_dz8c8r.jpg", 
+                    "https://res.cloudinary.com/kariecloud/image/upload/v1629311147/IMAGE_2021-08-11_19_31_19_tercal.jpg", 
+                    "https://res.cloudinary.com/kariecloud/image/upload/v1629311147/IMAGE_2021-08-11_19_31_27_tiinsh.jpg"
+                ]
+            },
+            {
+                "id": "4",
+                "name": "School House",
+                "className": "pink",
+                "logo": "https://res.cloudinary.com/kariecloud/image/upload/v1629311147/IMAGE_2021-08-11_20_44_17_gdbbtf.jpg",
+                "avatarUrls": [
+                    "https://res.cloudinary.com/kariecloud/image/upload/v1629311147/IMAGE_2021-08-11_19_28_18_hor5og.jpg", 
+                    "https://res.cloudinary.com/kariecloud/image/upload/v1629311147/IMAGE_2021-08-11_19_31_37_dz8c8r.jpg", 
+                    "https://res.cloudinary.com/kariecloud/image/upload/v1629311147/IMAGE_2021-08-11_19_31_47_a9fevj.jpg"
+                ]
+            }
 
     ],
     "tasks": [

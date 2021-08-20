@@ -103,3 +103,13 @@ input[type="checkbox"]:checked:after {
 input[type="checkbox"]:disabled:after {
   border-color: #7b7b7b;
 }
+
+.hide-native-scrollbar {
+  scroll-behavior: smooth;
+  scrollbar-width: none; /* Firefox 64 */
+  -ms-overflow-style: none; /* Internet Explorer 11 */
+  &::-webkit-scrollbar {
+    /** WebKit */
+    display: none;
+  }
+}
