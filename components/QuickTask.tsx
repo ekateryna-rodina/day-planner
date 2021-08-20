@@ -7,19 +7,12 @@ interface IQuickTaskProps {
   done: boolean;
 }
 // standart number of chars per 128px width;
-const originCharsPerWidth = [14, 128];
+const originCharsPerWidth = [20, 128];
 const QuickTask = (props: IQuickTaskProps) => {
   const { id, description: d, done } = props;
   const [description, setDescription] = useState<string>("");
   const [offset, setOffset] = useState<number>(5);
-  const [rows, setRows] = useState(1);
-  const getRows = (width: number, length: number) => {
-    const charsPerDynamicWidth =
-      (originCharsPerWidth[0] * width) / originCharsPerWidth[1];
-    const rows = Math.ceil(length / charsPerDynamicWidth);
-    console.log(rows);
-    return rows;
-  };
+
   const resizeHeight = (e: React.FormEvent<HTMLInputElement> | {} = {}) => {
     let fullId;
     if (!Object.keys(e).length) {
@@ -29,13 +22,8 @@ const QuickTask = (props: IQuickTaskProps) => {
     }
 
     let textArea = document.getElementById(fullId);
-    const rows = getRows(textArea!.scrollWidth, textArea!.innerHTML.length);
+
     setOffset(textArea!.scrollHeight);
-    setRows(rows);
-    console.log(rows);
-    // textArea.closest(".quickTaskRow").style.height = `${
-    //   textArea.scrollHeight + 5
-    // }px`;
   };
 
   const descriptionChangeHandler = (e) => {
@@ -56,7 +44,7 @@ const QuickTask = (props: IQuickTaskProps) => {
       <input type="checkbox" />
       <textarea
         className={QuickTaskStyles.quickTaskTextInput}
-        rows={rows}
+        style={{ height: `${offset}px` }}
         id={`quickTaskCheck_${id}`}
         value={description}
         onChange={descriptionChangeHandler}
