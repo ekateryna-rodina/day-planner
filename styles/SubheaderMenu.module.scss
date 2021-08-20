@@ -1,9 +1,10 @@
+@import "config";
 .projectsScope {
   input[type="radio"] {
     display: none;
   }
   label {
-    color: rgba(0, 0, 0, 0.4);
+    color: $subheader-color;
     margin-right: 0.1rem;
     cursor: pointer;
     transition: color 0.5s ease-in-out;

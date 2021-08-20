@@ -65,13 +65,9 @@ const Home: NextPage = (props) => {
           <div className={HomeStyles.quickTasksPanel}>
             <div className={HomeStyles.header}>
               <h2>Quick Tasks</h2>
-              <div className={HomeStyles.subheader}></div>
+              <div className={HomeStyles.subheader}>My miscellaneous tasks</div>
             </div>
             <div className={HomeStyles.quickTasks}>
-              {/* {quickTasks.map((task: QuickTaskType) => (
-                <QuickTask key={task.id} {...task} />
-              ))} */}
-
               <QuickTasks quickTasks={quickTasks} />
             </div>
           </div>
