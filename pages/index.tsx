@@ -1,4 +1,11 @@
+import { range } from "lodash";
 import type { NextPage } from "next";
+import { useState } from "react";
+import {
+  DragDropContext,
+  Droppable,
+  resetServerContext,
+} from "react-beautiful-dnd";
 import Background from "../components/Background";
 import Hint from "../components/Hint";
 import Project from "../components/Project";
@@ -16,9 +23,9 @@ interface IData {
   quickTasks: {}[];
 }
 export const getStaticProps = async () => {
+  resetServerContext();
   let data = await http<IData>("http://localhost:5000/data");
   const { projects, tasks, quickTasks } = data;
-  console.log(projects);
   return {
     props: {
       projects,
@@ -33,9 +40,61 @@ interface IHomeProps {
   tasks: Task[];
   quickTasks: QuickTaskType[];
 }
-const Home: NextPage = (props) => {
-  const { projects, tasks, quickTasks } = props;
-  console.log(quickTasks);
+const Home: NextPage<IHomeProps> = ({ projects, tasks, quickTasks }) => {
+  const [data, setData] = useState({ projects, tasks, quickTasks });
+  const isPositionChanged = (destination: any, source: any) => {
+    if (!destination || !source) return;
+    const isPositionChanged =
+      destination.droppableId === source.droppableId &&
+      destination.index != source.index;
+    return isPositionChanged;
+  };
+
+  const getAffectedTasksRange = (params: any) => {
+    const { from, to, moveDown } = params;
+    let rangeToUpdate: number[] = moveDown
+      ? range(to, from + 1)
+      : range(from, to + 1);
+    console.log(moveDown);
+    console.log(rangeToUpdate);
+    // console.log(rangeToUpdate);
+    return rangeToUpdate;
+  };
+  const reorderTaskPositions = (params: any) => {
+    const { destination, source, draggableId } = params;
+    const moveDown = destination.index > source.index;
+    const affectedRange = getAffectedTasksRange({
+      from: destination.index,
+      to: source.index,
+      moveDown,
+    });
+    // console.log(affectedRange);
+    let tasks_ = data.tasks;
+    tasks_.map((task) => {
+      if (!affectedRange.includes(task.position)) return task;
+      console.log(task.id, draggableId);
+      if (task.id === draggableId) {
+        task.position = destination.index;
+        task.block = 1;
+        return task;
+      }
+      task.position = moveDown ? task.position - 1 : task.position + 1;
+      return task;
+    });
+    console.log(tasks_);
+    setData({ ...data, tasks: tasks_ });
+  };
+  const onDragTaskEnd = (dropResult: any) => {
+    const { destination, source } = dropResult;
+    if (!isPositionChanged(destination, source)) return;
+    console.log(dropResult);
+    reorderTaskPositions({
+      destination,
+      source,
+      draggableId: dropResult.draggableId,
+    });
+  };
+
   return (
     <div>
       <Background />
@@ -50,7 +109,7 @@ const Home: NextPage = (props) => {
             </div>
             <Hint />
             <div className={HomeStyles.projects}>
-              {projects.map((p: ProjectType) => (
+              {data.projects.map((p: ProjectType) => (
                 <Project key={p.id} {...p} />
               ))}
             </div>
@@ -60,7 +119,16 @@ const Home: NextPage = (props) => {
               <h2>Tasks</h2>
               <div className={HomeStyles.subheader}>September, 14</div>
             </div>
-            <TasksByBlocks tasks={tasks} />
+            <DragDropContext onDragEnd={onDragTaskEnd}>
+              <Droppable droppableId="TASKSBYBLOCKS">
+                {(provided) => (
+                  <div ref={provided.innerRef} {...provided.droppableProps}>
+                    <TasksByBlocks tasks={data.tasks} />
+                    {provided.placeholder}
+                  </div>
+                )}
+              </Droppable>
+            </DragDropContext>
           </div>
           <div className={HomeStyles.quickTasksPanel}>
             <div className={HomeStyles.header}>
@@ -68,7 +136,7 @@ const Home: NextPage = (props) => {
               <div className={HomeStyles.subheader}>My miscellaneous tasks</div>
             </div>
             <div className={HomeStyles.quickTasks}>
-              <QuickTasks quickTasks={quickTasks} />
+              <QuickTasks quickTasks={data.quickTasks} />
             </div>
           </div>
         </div>

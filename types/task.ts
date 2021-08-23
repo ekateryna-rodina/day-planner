@@ -10,6 +10,7 @@ export type Task = {
   done: boolean;
   className: string;
   block: number;
+  position: number;
 };
 
 export type QuickTask = {

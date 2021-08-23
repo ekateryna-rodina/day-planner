@@ -6,7 +6,6 @@ interface ITasksByBlocks {
   tasks: Task[];
 }
 const TasksByBlocks = (props: ITasksByBlocks) => {
-  console.log(props);
   const { tasks } = props;
   const [groupedTasks, setGroupedTasks] = useState<BlockType>({});
   const groupTasks = () => {
@@ -29,7 +28,9 @@ const TasksByBlocks = (props: ITasksByBlocks) => {
     // eslint-disable-next-line
   }, [tasks]);
   const _renderBlock = (blockNumber: string, tasks: Task[]) => {
-    return <Block number={blockNumber} tasks={tasks} />;
+    return (
+      <Block key={blockNumber.toString()} number={blockNumber} tasks={tasks} />
+    );
   };
 
   return (

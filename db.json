@@ -45,7 +45,7 @@
             ]
         },
         {
-            "id": "1",
+            "id": "5",
             "name": "Facebook",
             "className": "blue",
             "logo": "https://res.cloudinary.com/kariecloud/image/upload/v1629311147/IMAGE_2021-08-11_18_39_43_r0ituj.jpg",
@@ -56,7 +56,7 @@
             ]
             },
             {
-                "id": "2",
+                "id": "6",
                 "name": "Package Plus",
                 "className": "turquise",
                 "logo": "https://res.cloudinary.com/kariecloud/image/upload/v1629311147/IMAGE_2021-08-11_20_44_27_v24656.jpg",
@@ -66,7 +66,7 @@
                 ]
             },
             {
-                "id": "3",
+                "id": "7",
                 "name": "Stamped",
                 "className": "purple",
                 "logo": "https://res.cloudinary.com/kariecloud/image/upload/v1629311147/IMAGE_2021-08-11_20_44_36_gd0noq.jpg",
@@ -77,7 +77,7 @@
                 ]
             },
             {
-                "id": "4",
+                "id": "8",
                 "name": "School House",
                 "className": "pink",
                 "logo": "https://res.cloudinary.com/kariecloud/image/upload/v1629311147/IMAGE_2021-08-11_20_44_17_gdbbtf.jpg",
@@ -97,7 +97,8 @@
             "logo": "https://res.cloudinary.com/kariecloud/image/upload/v1629311147/IMAGE_2021-08-12_17_36_24_ucrmqi.jpg",
             "done": false,
             "className": "blue",
-            "block": 1
+            "block": 1,
+            "position": 1
         },
         {
             "id": "2",
@@ -106,7 +107,8 @@
             "logo": "https://res.cloudinary.com/kariecloud/image/upload/v1629311147/IMAGE_2021-08-12_17_43_12_zwupv1.jpg",
             "done": false,
             "className": "pink",
-            "block": 1
+            "block": 1,
+            "position": 2
         },
         {
             "id": "3",
@@ -115,7 +117,8 @@
             "logo": "https://res.cloudinary.com/kariecloud/image/upload/v1629311147/IMAGE_2021-08-12_17_36_13_l7ympp.jpg",
             "done": false,
             "className": "purple",
-            "block": 2
+            "block": 1,
+            "position": 3
         },
         {
             "id": "4",
@@ -124,7 +127,8 @@
             "logo": "https://res.cloudinary.com/kariecloud/image/upload/v1629311147/IMAGE_2021-08-12_17_36_24_ucrmqi.jpg",
             "done": false,
             "className": "blue",
-            "block": 2
+            "block": 1,
+            "position": 4
         }  
     ],
     "quickTasks": [
