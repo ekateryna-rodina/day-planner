@@ -1,4 +1,5 @@
 import React, { Fragment, useEffect, useState } from "react";
+import { Droppable } from "react-beautiful-dnd";
 import { Block as BlockType, Task } from "../types/task";
 import Block from "./Block";
 
@@ -29,7 +30,18 @@ const TasksByBlocks = (props: ITasksByBlocks) => {
   }, [tasks]);
   const _renderBlock = (blockNumber: string, tasks: Task[]) => {
     return (
-      <Block key={blockNumber.toString()} number={blockNumber} tasks={tasks} />
+      <Droppable droppableId={`TASKSBYBLOCKS_${blockNumber}`}>
+        {(provided, snapshot) => (
+          <div ref={provided.innerRef} {...provided.droppableProps}>
+            <Block
+              key={blockNumber.toString()}
+              number={blockNumber}
+              tasks={tasks}
+            />
+            {provided.placeholder}
+          </div>
+        )}
+      </Droppable>
     );
   };
 

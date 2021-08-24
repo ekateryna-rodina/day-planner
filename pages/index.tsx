@@ -1,11 +1,7 @@
 import { range } from "lodash";
 import type { NextPage } from "next";
 import { useState } from "react";
-import {
-  DragDropContext,
-  Droppable,
-  resetServerContext,
-} from "react-beautiful-dnd";
+import { DragDropContext, resetServerContext } from "react-beautiful-dnd";
 import Background from "../components/Background";
 import Hint from "../components/Hint";
 import Project from "../components/Project";
@@ -95,52 +91,54 @@ const Home: NextPage<IHomeProps> = ({ projects, tasks, quickTasks }) => {
     });
   };
 
+  const onDragTaskUpdate = (res: any) => {
+    console.log(res);
+  };
+
   return (
     <div>
-      <Background />
-      <div className={HomeStyles.centeredContainer}>
-        <div className={HomeStyles.content}>
-          <div className={HomeStyles.projectsPanel}>
-            <div className={HomeStyles.header}>
-              <h2>Projects</h2>
-              <div className={HomeStyles.subheader}>
-                <SubheaderMenu />
+      <DragDropContext
+        onDragEnd={onDragTaskEnd}
+        onDragUpdate={onDragTaskUpdate}
+      >
+        <Background />
+        <div className={HomeStyles.centeredContainer}>
+          <div className={HomeStyles.content}>
+            <div className={HomeStyles.projectsPanel}>
+              <div className={HomeStyles.header}>
+                <h2>Projects</h2>
+                <div className={HomeStyles.subheader}>
+                  <SubheaderMenu />
+                </div>
+              </div>
+              <Hint />
+              <div className={HomeStyles.projects}>
+                {data.projects.map((p: ProjectType) => (
+                  <Project key={p.id} {...p} />
+                ))}
               </div>
             </div>
-            <Hint />
-            <div className={HomeStyles.projects}>
-              {data.projects.map((p: ProjectType) => (
-                <Project key={p.id} {...p} />
-              ))}
+            <div className={HomeStyles.tasksPanel}>
+              <div className={HomeStyles.header}>
+                <h2>Tasks</h2>
+                <div className={HomeStyles.subheader}>September, 14</div>
+              </div>
+              <TasksByBlocks tasks={data.tasks} />
             </div>
-          </div>
-          <div className={HomeStyles.tasksPanel}>
-            <div className={HomeStyles.header}>
-              <h2>Tasks</h2>
-              <div className={HomeStyles.subheader}>September, 14</div>
-            </div>
-            <DragDropContext onDragEnd={onDragTaskEnd}>
-              <Droppable droppableId="TASKSBYBLOCKS">
-                {(provided) => (
-                  <div ref={provided.innerRef} {...provided.droppableProps}>
-                    <TasksByBlocks tasks={data.tasks} />
-                    {provided.placeholder}
-                  </div>
-                )}
-              </Droppable>
-            </DragDropContext>
-          </div>
-          <div className={HomeStyles.quickTasksPanel}>
-            <div className={HomeStyles.header}>
-              <h2>Quick Tasks</h2>
-              <div className={HomeStyles.subheader}>My miscellaneous tasks</div>
-            </div>
-            <div className={HomeStyles.quickTasks}>
-              <QuickTasks quickTasks={data.quickTasks} />
+            <div className={HomeStyles.quickTasksPanel}>
+              <div className={HomeStyles.header}>
+                <h2>Quick Tasks</h2>
+                <div className={HomeStyles.subheader}>
+                  My miscellaneous tasks
+                </div>
+              </div>
+              <div className={HomeStyles.quickTasks}>
+                <QuickTasks quickTasks={data.quickTasks} />
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </DragDropContext>
     </div>
   );
 };
