@@ -1,6 +1,7 @@
+import produce from "immer";
 import { range } from "lodash";
 import type { NextPage } from "next";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { DragDropContext, resetServerContext } from "react-beautiful-dnd";
 import Background from "../components/Background";
 import Hint from "../components/Hint";
@@ -36,14 +37,25 @@ interface IHomeProps {
   tasks: Task[];
   quickTasks: QuickTaskType[];
 }
+
+const dragReducer = produce((draft, action) => {
+  switch (action.type) {
+    case "MOVE": {
+      draft[action.from] = draft[action.from] || [];
+      draft[action.to] = draft[action.to] || [];
+      const [removed] = draft[action.from].splice(action.fromIndex, 1);
+      draft[action.to].splice(action.toIndex, 0, removed);
+      console.log(draft);
+    }
+  }
+});
 const queryAttr = "data-rbd-drag-handle-draggable-id";
 const Home: NextPage<IHomeProps> = ({ projects, tasks, quickTasks }) => {
-  const [data, setData] = useState({ projects, tasks, quickTasks });
+  const [tasksData, setTasks] = useState(tasks);
+  const [projectsData, setProjects] = useState(projects);
+  const [quickTasksData, setQuicktasks] = useState(quickTasks);
   const [placeholedProps, setPlaceholderProps] = useState({});
 
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
   const isPositionChanged = (destination: any, source: any) => {
     if (!destination || !source) return;
     const isPositionChanged =
@@ -59,10 +71,7 @@ const Home: NextPage<IHomeProps> = ({ projects, tasks, quickTasks }) => {
       : range(from, to + 1);
     return rangeToUpdate;
   };
-  const reorderTaskPositions = async (
-    params: any,
-    data_: { tasks: Task[] }
-  ) => {
+  const reorderTaskPositions = (params: any, tasksToReorder: Task[]) => {
     const { destination, source, draggableId } = params;
     const moveDown = destination.index > source.index;
     const affectedRange = getAffectedTasksRange({
@@ -71,7 +80,7 @@ const Home: NextPage<IHomeProps> = ({ projects, tasks, quickTasks }) => {
       moveDown,
     });
 
-    let tasks_: Task[] = data_.tasks;
+    let tasks_: Task[] = tasksToReorder;
     for (let task of tasks_) {
       if (!affectedRange.includes(task.position)) continue;
       if (task.id === draggableId) {
@@ -82,35 +91,26 @@ const Home: NextPage<IHomeProps> = ({ projects, tasks, quickTasks }) => {
       }
     }
 
-    console.log("set tasks");
-    console.log(tasks_);
-    // let tasks_new: Task[] = await httpBulkPut<Task>(
-    //   `http://localhost:5000/data`,
-    //   tasks_
-    // );
-
-    setData({ ...data, tasks: tasks_ });
+    return tasks_;
   };
   const onDragTaskEnd = useCallback(
     (dropResult: any) => {
       const { destination, source } = dropResult;
-      if (!isPositionChanged(destination, source)) {
-        console.log("position has not changed");
-        return;
-      }
-      console.log("yaa drag end");
-      reorderTaskPositions(
+      if (!isPositionChanged(destination, source)) return;
+      const reordered: Task[] = reorderTaskPositions(
         {
           destination,
           source,
           draggableId: dropResult.draggableId,
         },
-        data
+        tasksData
       );
-      setPlaceholderProps({});
+
+      setTasks([...reordered]);
+      // setPlaceholderProps({});
     },
     // eslint-disable-next-line
-    [data]
+    []
   );
 
   const onDragTaskUpdate = (params: any) => {
@@ -164,7 +164,7 @@ const Home: NextPage<IHomeProps> = ({ projects, tasks, quickTasks }) => {
               </div>
               <Hint />
               <div className={HomeStyles.projects}>
-                {data.projects.map((p: ProjectType) => (
+                {projectsData.map((p: ProjectType) => (
                   <Project key={p.id} {...p} />
                 ))}
               </div>
@@ -174,7 +174,7 @@ const Home: NextPage<IHomeProps> = ({ projects, tasks, quickTasks }) => {
                 <h2>Tasks</h2>
                 <div className={HomeStyles.subheader}>September, 14</div>
               </div>
-              <TasksByBlocks tasks={data.tasks} dndParams={placeholedProps} />
+              <TasksByBlocks tasks={tasksData} dndParams={placeholedProps} />
             </div>
             <div className={HomeStyles.quickTasksPanel}>
               <div className={HomeStyles.header}>
@@ -184,7 +184,7 @@ const Home: NextPage<IHomeProps> = ({ projects, tasks, quickTasks }) => {
                 </div>
               </div>
               <div className={HomeStyles.quickTasks}>
-                <QuickTasks quickTasks={data.quickTasks} />
+                <QuickTasks quickTasks={quickTasksData} />
               </div>
             </div>
           </div>
