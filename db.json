@@ -117,7 +117,7 @@
             "logo": "https://res.cloudinary.com/kariecloud/image/upload/v1629311147/IMAGE_2021-08-12_17_36_13_l7ympp.jpg",
             "done": false,
             "className": "purple",
-            "block": 1,
+            "block": 2,
             "position": 3
         },
         {
@@ -127,7 +127,7 @@
             "logo": "https://res.cloudinary.com/kariecloud/image/upload/v1629311147/IMAGE_2021-08-12_17_36_24_ucrmqi.jpg",
             "done": false,
             "className": "blue",
-            "block": 1,
+            "block": 2,
             "position": 4
         }  
     ],

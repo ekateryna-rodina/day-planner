@@ -11,6 +11,7 @@
     "dev_next": "concurrently \"npm next\" \"npm run json-server\""
   },
   "dependencies": {
+    "axios": "^0.21.1",
     "concurrently": "^6.2.1",
     "json-server": "^0.16.3",
     "lodash": "^4.17.21",

@@ -1,6 +1,6 @@
 import { range } from "lodash";
 import type { NextPage } from "next";
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { DragDropContext, resetServerContext } from "react-beautiful-dnd";
 import Background from "../components/Background";
 import Hint from "../components/Hint";
@@ -11,7 +11,7 @@ import TasksByBlocks from "../components/TasksByBlocks";
 import HomeStyles from "../styles/Home.module.scss";
 import { Project as ProjectType } from "../types/project";
 import { QuickTask as QuickTaskType, Task } from "../types/task";
-import { http } from "../utils/http";
+import { httpGet } from "../utils/http";
 
 interface IData {
   projects: ProjectType[];
@@ -20,7 +20,7 @@ interface IData {
 }
 export const getStaticProps = async () => {
   resetServerContext();
-  let data = await http<IData>("http://localhost:5000/data");
+  let data = await httpGet<IData>("http://localhost:5000/data");
   const { projects, tasks, quickTasks } = data;
   return {
     props: {
@@ -36,12 +36,18 @@ interface IHomeProps {
   tasks: Task[];
   quickTasks: QuickTaskType[];
 }
+const queryAttr = "data-rbd-drag-handle-draggable-id";
 const Home: NextPage<IHomeProps> = ({ projects, tasks, quickTasks }) => {
   const [data, setData] = useState({ projects, tasks, quickTasks });
+  const [placeholedProps, setPlaceholderProps] = useState({});
+
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
   const isPositionChanged = (destination: any, source: any) => {
     if (!destination || !source) return;
     const isPositionChanged =
-      destination.droppableId === source.droppableId &&
+      destination.droppableId != source.droppableId ||
       destination.index != source.index;
     return isPositionChanged;
   };
@@ -51,12 +57,12 @@ const Home: NextPage<IHomeProps> = ({ projects, tasks, quickTasks }) => {
     let rangeToUpdate: number[] = moveDown
       ? range(to, from + 1)
       : range(from, to + 1);
-    console.log(moveDown);
-    console.log(rangeToUpdate);
-    // console.log(rangeToUpdate);
     return rangeToUpdate;
   };
-  const reorderTaskPositions = (params: any) => {
+  const reorderTaskPositions = async (
+    params: any,
+    data_: { tasks: Task[] }
+  ) => {
     const { destination, source, draggableId } = params;
     const moveDown = destination.index > source.index;
     const affectedRange = getAffectedTasksRange({
@@ -64,35 +70,80 @@ const Home: NextPage<IHomeProps> = ({ projects, tasks, quickTasks }) => {
       to: source.index,
       moveDown,
     });
-    // console.log(affectedRange);
-    let tasks_ = data.tasks;
-    tasks_.map((task) => {
-      if (!affectedRange.includes(task.position)) return task;
-      console.log(task.id, draggableId);
+
+    let tasks_: Task[] = data_.tasks;
+    for (let task of tasks_) {
+      if (!affectedRange.includes(task.position)) continue;
       if (task.id === draggableId) {
         task.position = destination.index;
-        task.block = 1;
-        return task;
+        task.block = +destination.droppableId.split("_")[1];
+      } else {
+        task.position = moveDown ? task.position - 1 : task.position + 1;
       }
-      task.position = moveDown ? task.position - 1 : task.position + 1;
-      return task;
-    });
+    }
+
+    console.log("set tasks");
     console.log(tasks_);
+    // let tasks_new: Task[] = await httpBulkPut<Task>(
+    //   `http://localhost:5000/data`,
+    //   tasks_
+    // );
+
     setData({ ...data, tasks: tasks_ });
   };
-  const onDragTaskEnd = (dropResult: any) => {
-    const { destination, source } = dropResult;
-    if (!isPositionChanged(destination, source)) return;
-    console.log(dropResult);
-    reorderTaskPositions({
-      destination,
-      source,
-      draggableId: dropResult.draggableId,
-    });
-  };
+  const onDragTaskEnd = useCallback(
+    (dropResult: any) => {
+      const { destination, source } = dropResult;
+      if (!isPositionChanged(destination, source)) {
+        console.log("position has not changed");
+        return;
+      }
+      console.log("yaa drag end");
+      reorderTaskPositions(
+        {
+          destination,
+          source,
+          draggableId: dropResult.draggableId,
+        },
+        data
+      );
+      setPlaceholderProps({});
+    },
+    // eslint-disable-next-line
+    [data]
+  );
 
-  const onDragTaskUpdate = (res: any) => {
-    console.log(res);
+  const onDragTaskUpdate = (params: any) => {
+    const { destination, draggableId } = params;
+    if (!destination) return;
+    const { droppableId, index } = destination;
+
+    const domQuery = `[${queryAttr}='${draggableId}']`;
+
+    const domDraggable = document.querySelector(domQuery);
+
+    if (!domDraggable) return;
+    const { clientHeight, clientWidth } = domDraggable;
+
+    const clientY =
+      parseFloat(window.getComputedStyle(domDraggable.parentNode).paddingTop) +
+      [...domDraggable.parentNode.children]
+        .slice(0, index)
+        .reduce((total, curr) => {
+          const style = curr.currentStyle || window.getComputedStyle(curr);
+          const marginBottom = parseFloat(style.marginBottom);
+          return total + curr.clientHeight + marginBottom;
+        }, 0);
+
+    setPlaceholderProps({
+      clientHeight,
+      clientWidth,
+      clientY,
+      clientX:
+        parseFloat(
+          window.getComputedStyle(domDraggable.parentNode).paddingLeft
+        ) + 330,
+    });
   };
 
   return (
@@ -123,7 +174,7 @@ const Home: NextPage<IHomeProps> = ({ projects, tasks, quickTasks }) => {
                 <h2>Tasks</h2>
                 <div className={HomeStyles.subheader}>September, 14</div>
               </div>
-              <TasksByBlocks tasks={data.tasks} />
+              <TasksByBlocks tasks={data.tasks} dndParams={placeholedProps} />
             </div>
             <div className={HomeStyles.quickTasksPanel}>
               <div className={HomeStyles.header}>

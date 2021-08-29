@@ -1,9 +1,11 @@
 @import "config";
 
+.dragOver {
+  background: red;
+}
 .taskBox {
   width: 100%;
   max-width: 32rem;
-  height: max-content;
   border: 1px solid rgba(0, 0, 0, 0.1);
   margin: 0 0.5rem;
   padding: 0.5rem;
@@ -11,15 +13,16 @@
   display: flex;
   flex-direction: row;
   margin-bottom: 0.5rem;
-
+  position: relative;
   &.activeDragging {
     border: 2px solid rgba(0, 0, 0, 0.5);
   }
   &.empy {
     border: 1px dashed rgba(0, 0, 0, 0.1);
-    .task-row {
+    .taskBox {
       background: rgba(0, 0, 0, 0.1);
       font-size: 0.7rem;
+      // position: absolute;
       span {
         margin: auto;
         color: rgba(0, 0, 0, 0.4);
@@ -30,7 +33,7 @@
     flex: 1;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
     margin-right: 0.5rem;
   }
