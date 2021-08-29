@@ -42,16 +42,6 @@ const TasksByBlocks = (props: ITasksByBlocks) => {
             >
               {provided.placeholder}
             </Block>
-            {/* <div
-              style={{
-                position: "absolute",
-                top: dndParams.clientY + 10,
-                left: dndParams.clientX,
-                height: "321px",
-                background: "tomato",
-                width: "512px",
-              }}
-            /> */}
           </div>
         )}
       </Droppable>

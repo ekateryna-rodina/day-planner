@@ -1,11 +1,12 @@
 @import "config";
 .centeredContainer {
   position: absolute;
-  width: 90%;
+  width: 80%;
   height: 80%;
   background-color: #fff;
   top: 10%;
-  left: 5%;
+  left: 10%;
+  // bottom: 0;
   border-radius: 1rem;
   box-shadow: 0 0 12px 1px rgba(255, 255, 255, 0.5);
 

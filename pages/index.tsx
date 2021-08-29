@@ -1,7 +1,7 @@
 import produce from "immer";
 import { range } from "lodash";
 import type { NextPage } from "next";
-import { useCallback, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { DragDropContext, resetServerContext } from "react-beautiful-dnd";
 import Background from "../components/Background";
 import Hint from "../components/Hint";
@@ -147,13 +147,14 @@ const Home: NextPage<IHomeProps> = ({ projects, tasks, quickTasks }) => {
   };
 
   return (
-    <div>
-      <DragDropContext
-        onDragEnd={onDragTaskEnd}
-        onDragUpdate={onDragTaskUpdate}
-      >
-        <Background />
-        <div className={HomeStyles.centeredContainer}>
+    <div style={{ width: "100vw", height: "100vh" }}>
+      <Background />
+
+      <div className={HomeStyles.centeredContainer}>
+        <DragDropContext
+          onDragEnd={onDragTaskEnd}
+          onDragUpdate={onDragTaskUpdate}
+        >
           <div className={HomeStyles.content}>
             <div className={HomeStyles.projectsPanel}>
               <div className={HomeStyles.header}>
@@ -188,8 +189,8 @@ const Home: NextPage<IHomeProps> = ({ projects, tasks, quickTasks }) => {
               </div>
             </div>
           </div>
-        </div>
-      </DragDropContext>
+        </DragDropContext>
+      </div>
     </div>
   );
 };
