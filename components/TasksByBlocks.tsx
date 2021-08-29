@@ -1,6 +1,5 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { Droppable } from "react-beautiful-dnd";
-import BlockStyles from "../styles/Block.module.scss";
 import { Block as BlockType, Task } from "../types/task";
 import Block from "./Block";
 
@@ -34,16 +33,15 @@ const TasksByBlocks = (props: ITasksByBlocks) => {
     return (
       <Droppable key={blockNumber} droppableId={`TASKSBYBLOCKS_${blockNumber}`}>
         {(provided, snapshot) => (
-          <div
-            ref={provided.innerRef}
-            {...provided.droppableProps}
-            className={snapshot.isDraggingOver ? BlockStyles.dragOver : ""}
-          >
+          <div ref={provided.innerRef} {...provided.droppableProps}>
             <Block
               key={blockNumber.toString()}
               number={blockNumber}
               tasks={tasks}
-            />
+              isDraggingOver={snapshot.isDraggingOver}
+            >
+              {provided.placeholder}
+            </Block>
             {/* <div
               style={{
                 position: "absolute",
@@ -54,7 +52,6 @@ const TasksByBlocks = (props: ITasksByBlocks) => {
                 width: "512px",
               }}
             /> */}
-            {/* {provided.placeholder} */}
           </div>
         )}
       </Droppable>

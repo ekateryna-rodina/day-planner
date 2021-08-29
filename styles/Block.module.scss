@@ -1,8 +1,5 @@
 @import "config";
 
-.dragOver {
-  background: red;
-}
 .taskBox {
   width: 100%;
   max-width: 32rem;
@@ -14,8 +11,8 @@
   flex-direction: row;
   margin-bottom: 0.5rem;
   position: relative;
-  &.activeDragging {
-    border: 2px solid rgba(0, 0, 0, 0.5);
+  &.dragOver {
+    border: 2px solid $dark;
   }
   &.empy {
     border: 1px dashed rgba(0, 0, 0, 0.1);

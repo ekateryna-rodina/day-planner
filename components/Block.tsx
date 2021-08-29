@@ -1,6 +1,6 @@
 import { orderBy } from "lodash";
 import Img from "next/image";
-import React, { useRef } from "react";
+import React, { ReactNode, useEffect, useRef, useState } from "react";
 import { Draggable } from "react-beautiful-dnd";
 import BlockStyles from "../styles/Block.module.scss";
 import TaskStyles from "../styles/Task.module.scss";
@@ -9,6 +9,8 @@ import { Task as TaskType } from "../types/task";
 interface IBlockProps {
   number: string;
   tasks: TaskType[];
+  isDraggingOver: boolean;
+  children?: ReactNode;
 }
 
 // eslint-disable-next-line react/display-name
@@ -28,15 +30,20 @@ const Task = React.forwardRef(
 );
 
 const Block = (props: IBlockProps) => {
-  const { number, tasks } = props;
+  const { number, tasks, isDraggingOver } = props;
+  const [height, setHeight] = useState(300);
   const ref = useRef(null);
 
+  const classNames = `${BlockStyles.taskBox} ${
+    isDraggingOver ? BlockStyles.dragOver : ""
+  }`;
+  useEffect(() => {
+    console.log(isDraggingOver);
+    if (!isDraggingOver) return;
+    setInterval(() => setHeight(500), 1000);
+  }, [isDraggingOver]);
   return (
-    <div
-      className={BlockStyles.taskBox}
-      style={{ height: `${321}px` }}
-      ref={ref}
-    >
+    <div className={classNames} ref={ref}>
       <div className={BlockStyles.taskContainer}>
         {tasks.length &&
           orderBy(tasks, "position").map((t: TaskType) => (
@@ -70,6 +77,7 @@ const Block = (props: IBlockProps) => {
               )}
             </Draggable>
           ))}
+        {props.children}
       </div>
       <div className={BlockStyles.blockName}>
         <span className={BlockStyles.verticalText}>{`Block ${number}`}</span>
