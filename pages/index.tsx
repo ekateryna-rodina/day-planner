@@ -55,7 +55,7 @@ const Home: NextPage<IHomeProps> = ({ projects, tasks, quickTasks }) => {
   const [projectsData, setProjects] = useState(projects);
   const [quickTasksData, setQuicktasks] = useState(quickTasks);
   const [placeholedProps, setPlaceholderProps] = useState({});
-
+  // const [expanded, setExpanded] = useState();
   const isPositionChanged = (destination: any, source: any) => {
     if (!destination || !source) return;
     const isPositionChanged =
@@ -147,7 +147,7 @@ const Home: NextPage<IHomeProps> = ({ projects, tasks, quickTasks }) => {
   };
 
   return (
-    <div style={{ width: "100vw", height: "100vh" }}>
+    <div>
       <Background />
 
       <div className={HomeStyles.centeredContainer}>
