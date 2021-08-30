@@ -97,19 +97,26 @@
 .appear.appearActive {
   opacity: 1;
   transition: opacity 500ms ease-in;
+  -webkit-transition: opacity 500ms ease-in;
+  -moz-transition: opacity 500ms ease-in;
+  -ms-transition: opacity 500ms ease-in;
+  -o-transition: opacity 500ms ease-in;
 }
 
 .leave {
   opacity: 1;
-  background: red;
 }
 
 .leave.leaveActive {
   opacity: 0;
-  transition: opacity 300ms ease-in;
+  transition: opacity 1000ms ease-in;
+  -webkit-transition: opacity 1000ms ease-in;
+  -moz-transition: opacity 1000ms ease-in;
+  -ms-transition: opacity 1000ms ease-in;
+  -o-transition: opacity 1000ms ease-in;
 }
-.tasks {
-  width: 100%;
+.projecTasksSection {
+  width: 88%;
   height: max-content;
   border-radius: 5px;
   -webkit-border-radius: 5px;
@@ -119,7 +126,7 @@
   .searchOrAddRow {
     display: flex;
     justify-content: space-between;
-    width: 88%;
+    width: 100%;
     .taskInput {
       position: relative;
       width: 80%;
@@ -163,6 +170,24 @@
       -moz-border-radius: 2px;
       -ms-border-radius: 2px;
       -o-border-radius: 2px;
+    }
+  }
+
+  .tasks {
+    margin-top: 0.5rem;
+    padding: 0.1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .singleTask {
+      width: 100%;
+      margin: 0.1rem 0;
+      padding: 0.1rem;
+      box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.1);
+
+      &:not(:last-child) {
+        margin-bottom: 0.5rem;
+      }
     }
   }
 }

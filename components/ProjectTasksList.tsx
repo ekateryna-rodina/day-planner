@@ -24,7 +24,7 @@ const ProjectTasksList = () => {
       transitionEnterTimeout={300}
       transitionLeaveTimeout={300}
     >
-      <div key={"any key"} className={ProjectStyles.tasks}>
+      <div className={ProjectStyles.projecTasksSection}>
         <form onSubmit={createTask}>
           <div className={ProjectStyles.searchOrAddRow}>
             <div className={ProjectStyles.taskInput}>
@@ -32,14 +32,15 @@ const ProjectTasksList = () => {
                 type="text"
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
+                placeholder={"Add or search a task"}
               />
               <span className={ProjectStyles.focusInput}></span>
             </div>
             <input type="submit" value="+" />
           </div>
-          <div className="tasks">
+          <div className={ProjectStyles.tasks}>
             {tasks.map((t) => (
-              <div key={t} className="singleTask">
+              <div key={t} className={ProjectStyles.singleTask}>
                 {t}
               </div>
             ))}
