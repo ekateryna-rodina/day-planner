@@ -14,6 +14,9 @@ interface IProjectProps {
 const Project = (props: IProjectProps) => {
   const { className, name, avatarUrls, logo } = props;
   const [expanded, setExpanded] = useState(false);
+  const expandHandler = () => {
+    setExpanded(!expanded);
+  };
   return (
     <div>
       <div className={`${ProjectStyles.projectBox} ${className}Pastel`}>
@@ -32,7 +35,7 @@ const Project = (props: IProjectProps) => {
           </div>
         </div>
         <span
-          onClick={() => setExpanded(!expanded)}
+          onClick={expandHandler}
           className={`fa ${ProjectStyles.chevron} ${
             expanded ? ProjectStyles.down : ""
           }`}
@@ -40,6 +43,7 @@ const Project = (props: IProjectProps) => {
           &#xf054;
         </span>
       </div>
+
       {expanded && <ProjectTasksList />}
     </div>
   );

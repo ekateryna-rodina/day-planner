@@ -81,6 +81,33 @@
   }
 }
 
+.enter {
+  opacity: 0;
+}
+
+.enter.enterActive {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+
+.appear {
+  opacity: 0;
+}
+
+.appear.appearActive {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+
+.leave {
+  opacity: 1;
+  background: red;
+}
+
+.leave.leaveActive {
+  opacity: 0;
+  transition: opacity 300ms ease-in;
+}
 .tasks {
   width: 100%;
   height: max-content;
