@@ -9,12 +9,13 @@ let apolloClient: ApolloClient<NormalizedCacheObject>;
 
 function createIsomorphicLink() {
   if (typeof window === undefined) {
-    const SchemaLink = require("@pollo/client/link/schema");
+    const SchemaLink = require("@apollo/client/link/schema");
     const schema = require("./schema");
+    console.log(schema);
     return new SchemaLink({ schema });
   } else {
     const { HttpLink } = require("@apollo/client");
-    return new HttpLink({ uri: "/api/graphql" });
+    return new HttpLink({ uri: "http://localhost:3000/api/graphql" });
   }
 }
 function createApolloClient() {

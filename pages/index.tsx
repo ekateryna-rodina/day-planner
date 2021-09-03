@@ -1,5 +1,5 @@
 import { gql, useQuery } from "@apollo/client";
-import produce from "immer";
+import Project from "components/Project";
 import { range } from "lodash";
 import type { NextPage } from "next";
 import React, { useCallback, useState } from "react";
@@ -7,14 +7,12 @@ import { DragDropContext } from "react-beautiful-dnd";
 import { initializeApollo } from "src/apollo";
 import Background from "../components/Background";
 import Hint from "../components/Hint";
-import Project from "../components/Project";
 import QuickTasks from "../components/QuickTasks";
 import SubheaderMenu from "../components/SubheaderMenu";
 import TasksByBlocks from "../components/TasksByBlocks";
 import HomeStyles from "../styles/Home.module.scss";
 import { Project as ProjectType } from "../types/project";
 import { QuickTask as QuickTaskType, Task } from "../types/task";
-import { httpGet } from "../utils/http";
 
 interface IData {
   projects: ProjectType[];
@@ -22,24 +20,39 @@ interface IData {
   quickTasks: {}[];
 }
 
-const DataQuery = gql`
-  query DataQuery {
-    data
+const MyQuery = gql`
+  query MyQuery {
+    projects {
+      id
+      name
+      className
+      logo
+    }
+    scheduledTasks {
+      id
+      projectName
+      description
+      logo
+      className
+      block
+      position
+      done
+    }
+    quickTasks {
+      id
+      description
+      done
+    }
   }
 `;
 export const getStaticProps = async () => {
-  // resetServerContext();
   const apolloClient = initializeApollo();
   await apolloClient.query({
-    query: DataQuery,
+    query: MyQuery,
   });
-  let data = await httpGet<IData>("http://localhost:5000/data");
-  const { projects, tasks, quickTasks } = data;
   return {
     props: {
-      projects,
-      tasks,
-      quickTasks,
+      initialApolloState: apolloClient.cache.extract(),
     },
   };
 };
@@ -50,24 +63,19 @@ interface IHomeProps {
   quickTasks: QuickTaskType[];
 }
 
-const dragReducer = produce((draft, action) => {
-  switch (action.type) {
-    case "MOVE": {
-      draft[action.from] = draft[action.from] || [];
-      draft[action.to] = draft[action.to] || [];
-      const [removed] = draft[action.from].splice(action.fromIndex, 1);
-      draft[action.to].splice(action.toIndex, 0, removed);
-      console.log(draft);
-    }
-  }
-});
 const queryAttr = "data-rbd-drag-handle-draggable-id";
-const Home: NextPage<IHomeProps> = ({ projects, tasks, quickTasks }) => {
-  const [tasksData, setTasks] = useState(tasks);
+const Home: NextPage<IHomeProps> = () => {
+  const { data, loading } = useQuery(MyQuery);
+  const [projects, scheduledTasks, quickTasks] = [
+    data.projects,
+    data.scheduledTasks,
+    data.quickTasks,
+  ];
+
+  const [tasksData, setTasks] = useState(scheduledTasks);
   const [projectsData, setProjects] = useState(projects);
   const [quickTasksData, setQuicktasks] = useState(quickTasks);
   const [placeholedProps, setPlaceholderProps] = useState({});
-  const { data, loading } = useQuery(DataQuery);
   // const [expanded, setExpanded] = useState();
   const isPositionChanged = (destination: any, source: any) => {
     if (!destination || !source) return;
@@ -165,7 +173,6 @@ const Home: NextPage<IHomeProps> = ({ projects, tasks, quickTasks }) => {
       <Background />
 
       <div className={HomeStyles.centeredContainer}>
-        <pre>{JSON.stringify(data, null, 2)}</pre>
         <DragDropContext
           onDragEnd={onDragTaskEnd}
           onDragUpdate={onDragTaskUpdate}

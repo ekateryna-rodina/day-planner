@@ -24,11 +24,11 @@ const Project = (props: IProjectProps) => {
         <div className={ProjectStyles.projectBoxContent}>
           <span className={ProjectStyles.projectName}>{name}</span>
           <div className={ProjectStyles.avatarSection}>
-            {avatarUrls.map((a) => (
+            {/* {avatarUrls.map((a) => (
               <div className={ProjectStyles.avatar} key={a}>
                 <Img src={a} layout="fill" />
               </div>
-            ))}
+            ))} */}
             <span className={ProjectStyles.addMember}>
               <i className="fa">&#xf067;</i>
             </span>
