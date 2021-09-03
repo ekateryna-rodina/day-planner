@@ -1,8 +1,10 @@
+import { gql, useQuery } from "@apollo/client";
 import produce from "immer";
 import { range } from "lodash";
 import type { NextPage } from "next";
 import React, { useCallback, useState } from "react";
-import { DragDropContext, resetServerContext } from "react-beautiful-dnd";
+import { DragDropContext } from "react-beautiful-dnd";
+import { initializeApollo } from "src/apollo";
 import Background from "../components/Background";
 import Hint from "../components/Hint";
 import Project from "../components/Project";
@@ -19,8 +21,18 @@ interface IData {
   tasks: {}[];
   quickTasks: {}[];
 }
+
+const DataQuery = gql`
+  query DataQuery {
+    data
+  }
+`;
 export const getStaticProps = async () => {
-  resetServerContext();
+  // resetServerContext();
+  const apolloClient = initializeApollo();
+  await apolloClient.query({
+    query: DataQuery,
+  });
   let data = await httpGet<IData>("http://localhost:5000/data");
   const { projects, tasks, quickTasks } = data;
   return {
@@ -55,6 +67,7 @@ const Home: NextPage<IHomeProps> = ({ projects, tasks, quickTasks }) => {
   const [projectsData, setProjects] = useState(projects);
   const [quickTasksData, setQuicktasks] = useState(quickTasks);
   const [placeholedProps, setPlaceholderProps] = useState({});
+  const { data, loading } = useQuery(DataQuery);
   // const [expanded, setExpanded] = useState();
   const isPositionChanged = (destination: any, source: any) => {
     if (!destination || !source) return;
@@ -146,11 +159,13 @@ const Home: NextPage<IHomeProps> = ({ projects, tasks, quickTasks }) => {
     });
   };
 
+  if (loading) return <span>...loading</span>;
   return (
     <div>
       <Background />
 
       <div className={HomeStyles.centeredContainer}>
+        <pre>{JSON.stringify(data, null, 2)}</pre>
         <DragDropContext
           onDragEnd={onDragTaskEnd}
           onDragUpdate={onDragTaskUpdate}
