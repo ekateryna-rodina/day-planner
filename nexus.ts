@@ -3,7 +3,7 @@
  * Do not make changes to this file directly
  */
 
-
+import * as Context from "./src/context"
 
 
 
@@ -126,6 +126,11 @@ export interface NexusGenFieldTypeNames {
 }
 
 export interface NexusGenArgTypes {
+  Query: {
+    projects: { // args
+      id?: string | null; // ID
+    }
+  }
 }
 
 export interface NexusGenAbstractTypeMembers {
@@ -159,7 +164,7 @@ export type NexusGenFeaturesConfig = {
 }
 
 export interface NexusGenTypes {
-  context: any;
+  context: Context.Context;
   inputTypes: NexusGenInputs;
   rootTypes: NexusGenRootTypes;
   argTypes: NexusGenArgTypes;

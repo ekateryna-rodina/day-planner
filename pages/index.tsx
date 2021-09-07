@@ -61,7 +61,6 @@ const Home: NextPage<IHomeProps> = (props) => {
 
   const [tasksData, setTasks] = useState(scheduledTasks);
   const [projectsData, setProjects] = useState(projects);
-  console.log('set projects')
   const [quickTasksData, setQuicktasks] = useState(quickTasks);
   const [placeholedProps, setPlaceholderProps] = useState({});
   // const [expanded, setExpanded] = useState();

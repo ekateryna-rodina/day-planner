@@ -1,4 +1,4 @@
-import { makeSchema, objectType, queryType } from "@nexus/schema";
+import { makeSchema, objectType, queryType, idArg } from "@nexus/schema";
 import {nexusSchemaPrisma} from "nexus-plugin-prisma/schema";
 import path from 'path';
 
@@ -36,16 +36,13 @@ const QuickTask = objectType({
 export const Query = queryType({
   definition(t) {
     t.list.field("projects", {
-      type: "Project",
-      resolve: () => {
-        return [
-          {
-            id: "1",
-            name: "Facebook",
-            className: "blue",
-            logo: "https://res.cloudinary.com/kariecloud/image/upload/v1629311147/IMAGE_2021-08-11_18_39_43_r0ituj.jpg",
-          },
-        ];
+      type: Project,
+      nullable: true,
+      args: {
+        id: idArg()
+      },
+      resolve:(_root,{id}, ctx ) => {
+        return [ctx.prisma.project.findUnique({where: {id: +id}})];
       },
     });
     
@@ -96,4 +93,17 @@ export const schema = makeSchema({
     schema: path.join(process.cwd(), "schema.graphql"),
     typegen: path.join(process.cwd(), "nexus.ts"),
   },
+  typegenAutoConfig: {
+    contextType: "Context.Context",
+    sources: [
+      {
+        source: "@prisma/client",
+        alias: "prisma"
+      },
+      {
+        source: require.resolve("./context"),
+        alias: "Context"
+      }
+    ]
+  }
 });
