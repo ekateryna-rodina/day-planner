@@ -1,0 +1,1 @@
+.projectsScope input[type="radio"]{display:none}.projectsScope label{color:rgba(0,0,0,0.4);margin-right:0.1rem;cursor:pointer;-webkit-transition:color 0.5s ease-in-out;transition:color 0.5s ease-in-out}.projectsScope label:hover{color:red}.projectsScope label.active{border-bottom:1px solid red}

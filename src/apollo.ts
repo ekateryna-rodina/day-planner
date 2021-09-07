@@ -6,28 +6,28 @@ import {
 import { useMemo } from "react";
 
 let apolloClient: ApolloClient<NormalizedCacheObject>;
-
 function createIsomorphicLink() {
   if (typeof window === undefined) {
+        console.log('server');
     const SchemaLink = require("@apollo/client/link/schema");
     const schema = require("./schema");
-    console.log(schema);
+
     return new SchemaLink({ schema });
   } else {
-    const { HttpLink } = require("@apollo/client");
+    const { HttpLink } = require("@apollo/client/link/http");
     return new HttpLink({ uri: "http://localhost:3000/api/graphql" });
   }
 }
+  const { HttpLink } = require("@apollo/client/link/http");
 function createApolloClient() {
   return new ApolloClient({
     ssrMode: typeof window === undefined,
     link: createIsomorphicLink(),
-    cache: new InMemoryCache(),
-  });
+    cache: new InMemoryCache()
+})
 }
 export function initializeApollo(initialState: any = null) {
   const _apolloClient = apolloClient ?? createApolloClient();
-
   if (initialState) {
     _apolloClient.cache.restore(initialState);
   }

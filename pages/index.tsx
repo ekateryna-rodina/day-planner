@@ -2,7 +2,7 @@ import { gql, useQuery } from "@apollo/client";
 import Project from "components/Project";
 import { range } from "lodash";
 import type { NextPage } from "next";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import { DragDropContext } from "react-beautiful-dnd";
 import { initializeApollo } from "src/apollo";
 import Background from "../components/Background";
@@ -20,42 +20,16 @@ interface IData {
   quickTasks: {}[];
 }
 
-const MyQuery = gql`
-  query MyQuery {
+const Query = gql`
+  query Query {
     projects {
       id
       name
       className
       logo
     }
-    scheduledTasks {
-      id
-      projectName
-      description
-      logo
-      className
-      block
-      position
-      done
-    }
-    quickTasks {
-      id
-      description
-      done
-    }
-  }
+  } 
 `;
-export const getStaticProps = async () => {
-  const apolloClient = initializeApollo();
-  await apolloClient.query({
-    query: MyQuery,
-  });
-  return {
-    props: {
-      initialApolloState: apolloClient.cache.extract(),
-    },
-  };
-};
 
 interface IHomeProps {
   projects: ProjectType[];
@@ -64,16 +38,30 @@ interface IHomeProps {
 }
 
 const queryAttr = "data-rbd-drag-handle-draggable-id";
-const Home: NextPage<IHomeProps> = () => {
-  const { data, loading } = useQuery(MyQuery);
+const Home: NextPage<IHomeProps> = (props) => {
+
+  const { data, loading, error } = useQuery(Query);
+
+  console.log(data);
+  //   const [projects, scheduledTasks, quickTasks] = [
+  //   [],
+  //   [],
+  //   []
+  // ];
+  function setProjectsHandler(){
+    if(!data) return;
+     setProjects(data.projects);
+  }
+  // useEffect(setProjectsHandler, [data])
   const [projects, scheduledTasks, quickTasks] = [
-    data.projects,
-    data.scheduledTasks,
-    data.quickTasks,
+    data?.projects ?? [],
+    data?.scheduledTasks ?? [],
+    data?.quickTasks ?? [],
   ];
 
   const [tasksData, setTasks] = useState(scheduledTasks);
   const [projectsData, setProjects] = useState(projects);
+  console.log('set projects')
   const [quickTasksData, setQuicktasks] = useState(quickTasks);
   const [placeholedProps, setPlaceholderProps] = useState({});
   // const [expanded, setExpanded] = useState();
@@ -187,7 +175,7 @@ const Home: NextPage<IHomeProps> = () => {
               </div>
               <Hint />
               <div className={HomeStyles.projects}>
-                {projectsData.map((p: ProjectType) => (
+                {projectsData && projectsData.map((p: ProjectType) => (
                   <Project key={p.id} {...p} />
                 ))}
               </div>

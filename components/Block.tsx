@@ -38,7 +38,6 @@ const Block = (props: IBlockProps) => {
     isDraggingOver ? BlockStyles.dragOver : ""
   }`;
   useEffect(() => {
-    console.log(isDraggingOver);
     if (!isDraggingOver) return;
     setInterval(() => setHeight(500), 1000);
   }, [isDraggingOver]);

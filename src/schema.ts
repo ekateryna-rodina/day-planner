@@ -1,4 +1,6 @@
 import { makeSchema, objectType, queryType } from "@nexus/schema";
+import {nexusSchemaPrisma} from "nexus-plugin-prisma/schema";
+import path from 'path';
 
 const Project = objectType({
   name: "Project",
@@ -46,7 +48,7 @@ export const Query = queryType({
         ];
       },
     });
-
+    
     t.list.field("scheduledTasks", {
       type: "ScheduledTask",
       resolve: () => {
@@ -89,4 +91,9 @@ export const Query = queryType({
 
 export const schema = makeSchema({
   types: [Query, Project, ScheduledTask, QuickTask],
+  plugins: [nexusSchemaPrisma()],
+  outputs: {
+    schema: path.join(process.cwd(), "schema.graphql"),
+    typegen: path.join(process.cwd(), "nexus.ts"),
+  },
 });

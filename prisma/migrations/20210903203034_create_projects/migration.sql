@@ -4,6 +4,5 @@ CREATE TABLE "Project" (
     "name" TEXT NOT NULL,
     "className" TEXT NOT NULL,
     "logo" TEXT NOT NULL,
-
     PRIMARY KEY ("id")
 );
