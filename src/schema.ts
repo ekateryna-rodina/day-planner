@@ -1,94 +1,69 @@
-import { makeSchema, objectType, queryType, idArg } from "@nexus/schema";
+import { makeSchema, objectType, queryType, idArg, mutationType } from "@nexus/schema";
 import {nexusSchemaPrisma} from "nexus-plugin-prisma/schema";
 import path from 'path';
 
 const Project = objectType({
   name: "Project",
   definition(t) {
-    t.string("id");
-    t.string("name");
-    t.string("className");
-    t.string("logo");
+    // t.string("id");
+    // t.string("name");
+    // t.string("className");
+    // t.string("logo");
+    t.model.id();
+    t.model.name();
+    t.model.className();
+    t.model.logo();
+    t.model.avatars();
+    t.model.tasks();   
   },
 });
 const ScheduledTask = objectType({
   name: "ScheduledTask",
   definition(t) {
-    t.string("id");
-    t.string("projectName");
-    t.string("description");
-    t.string("logo");
-    t.string("className");
-    t.int("block");
-    t.int("position");
+    t.int("id");
+    t.int("taskId");
+    // t.model.task();
+    // t.string("description");
+    t.int("section");
+    t.int("order");
     t.boolean("done");
+    t.string("datetime");
   },
 });
 
 const QuickTask = objectType({
   name: "QuickTask",
   definition(t) {
-    t.string("id");
+    t.int("id");
     t.string("description");
     t.boolean("done");
   },
 });
 export const Query = queryType({
   definition(t) {
-    t.list.field("projects", {
-      type: Project,
-      nullable: true,
-      args: {
-        id: idArg()
-      },
-      resolve:(_root,{id}, ctx ) => {
-        return [ctx.prisma.project.findUnique({where: {id: +id}})];
-      },
-    });
-    
-    t.list.field("scheduledTasks", {
-      type: "ScheduledTask",
-      resolve: () => {
-        return [
-          {
-            id: "2",
-            projectName: "School House",
-            description: "QA on new web page",
-            logo: "https://res.cloudinary.com/kariecloud/image/upload/v1629311147/IMAGE_2021-08-12_17_43_12_zwupv1.jpg",
-            done: false,
-            className: "pink",
-            block: 1,
-            position: 2,
-          },
-        ];
-      },
-    });
-
-    t.list.field("quickTasks", {
-      type: "QuickTask",
-      resolve: () => {
-        return [
-          {
-            id: "2",
-            description:
-              "Check the mail from Richard Check the mail from RichardCheck the mail from Richard",
-            done: true,
-          },
-          {
-            id: "3",
-            description:
-              "Check the mail from Richard Check the mail from RichardCheck the mail from Richard",
-            done: true,
-          },
-        ];
-      },
-    });
+    t.crud.project();
+    t.crud.projects();
+    t.crud.quickTasks();
+    t.crud.quickTask();
+    // t.crud.task();
+    // t.crud.tasks();
+    // t.crud.scheduledTask();
+    // t.crud.scheduledTasks();
   },
 });
 
+const Mutation = mutationType({
+  definition(t){
+    t.crud.createOneProject();
+    t.crud.createOneQuickTask();
+    // t.crud.createOneTask();
+    // t.crud.createOneScheduledTask();
+  }
+})
+
 export const schema = makeSchema({
-  types: [Query, Project, ScheduledTask, QuickTask],
-  plugins: [nexusSchemaPrisma()],
+  types: [Query, Project, ScheduledTask, QuickTask, Mutation],
+  plugins: [nexusSchemaPrisma({experimentalCRUD: true})],
   outputs: {
     schema: path.join(process.cwd(), "schema.graphql"),
     typegen: path.join(process.cwd(), "nexus.ts"),

@@ -3,16 +3,52 @@
 
 datasource db {
   provider = "postgresql"
-  url      = env(\"DATABASE_URL\")
+  url      = env("DATABASE_URL")
 }
 
 generator client {
   provider = "prisma-client-js"
 }
 
-model Project{
-  id Int @default(autoincrement()) @id 
-  name String
+model File {
+  id     Int    @id @default(autoincrement())
+  name   String
+  url    String
+  Task   Task?  @relation(fields: [taskId], references: [id])
+  taskId Int?
+}
+
+model Task {
+  id            Int             @id @default(autoincrement())
+  title         String
+  description   String
+  files         File[]
+  project       Project         @relation(fields: [projectId], references: [id])
+  projectId     Int
+  ScheduledTask ScheduledTask[]
+}
+
+model Project {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique
   className String
-  logo String
+  logo      String
+  avatars   String[]
+  tasks     Task[]
+}
+
+model ScheduledTask {
+  id       Int      @id @default(autoincrement())
+  task     Task     @relation(fields: [taskId], references: [id])
+  taskId   Int
+  datetime DateTime
+  section  Int
+  order    Int
+  done     Boolean  @default(false)
+}
+
+model QuickTask {
+  id          Int     @id @default(autoincrement())
+  description String
+  done        Boolean @default(false)
 }

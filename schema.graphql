@@ -2,32 +2,167 @@
 ### Do not make changes to this file directly
 
 
+scalar DateTime
+
+input FileCreateManyTaskInput {
+  id: Int
+  name: String!
+  url: String!
+}
+
+input FileCreateManyTaskInputEnvelope {
+  data: [FileCreateManyTaskInput!]
+  skipDuplicates: Boolean
+}
+
+input FileCreateNestedManyWithoutTaskInput {
+  connect: [FileWhereUniqueInput!]
+  connectOrCreate: [FileCreateOrConnectWithoutTaskInput!]
+  create: [FileCreateWithoutTaskInput!]
+  createMany: FileCreateManyTaskInputEnvelope
+}
+
+input FileCreateOrConnectWithoutTaskInput {
+  create: FileCreateWithoutTaskInput!
+  where: FileWhereUniqueInput!
+}
+
+input FileCreateWithoutTaskInput {
+  name: String!
+  url: String!
+}
+
+input FileWhereUniqueInput {
+  id: Int
+}
+
+type Mutation {
+  createOneProject(data: ProjectCreateInput!): Project!
+  createOneQuickTask(data: QuickTaskCreateInput!): QuickTask!
+}
+
 type Project {
-  className: String
-  id: String
-  logo: String
+  avatars: [String!]!
+  className: String!
+  id: Int!
+  logo: String!
+  name: String!
+}
+
+input ProjectCreateInput {
+  avatars: ProjectCreateavatarsInput
+  className: String!
+  logo: String!
+  name: String!
+  tasks: TaskCreateNestedManyWithoutProjectInput
+}
+
+input ProjectCreateavatarsInput {
+  set: [String!]
+}
+
+input ProjectWhereUniqueInput {
+  id: Int
   name: String
 }
 
 type Query {
-  projects(id: ID): [Project]
-  quickTasks: [QuickTask]
-  scheduledTasks: [ScheduledTask]
+  project(where: ProjectWhereUniqueInput!): Project
+  projects(after: ProjectWhereUniqueInput, before: ProjectWhereUniqueInput, first: Int, last: Int): [Project!]!
+  quickTask(where: QuickTaskWhereUniqueInput!): QuickTask
+  quickTasks(after: QuickTaskWhereUniqueInput, before: QuickTaskWhereUniqueInput, first: Int, last: Int): [QuickTask!]!
 }
 
 type QuickTask {
   description: String
   done: Boolean
-  id: String
+  id: Int
+}
+
+input QuickTaskCreateInput {
+  description: String!
+  done: Boolean
+}
+
+input QuickTaskWhereUniqueInput {
+  id: Int
 }
 
 type ScheduledTask {
-  block: Int
-  className: String
-  description: String
+  datetime: String
   done: Boolean
-  id: String
-  logo: String
-  position: Int
-  projectName: String
+  id: Int
+  order: Int
+  section: Int
+  taskId: Int
+}
+
+input ScheduledTaskCreateManyTaskInput {
+  datetime: DateTime!
+  done: Boolean
+  id: Int
+  order: Int!
+  section: Int!
+}
+
+input ScheduledTaskCreateManyTaskInputEnvelope {
+  data: [ScheduledTaskCreateManyTaskInput!]
+  skipDuplicates: Boolean
+}
+
+input ScheduledTaskCreateNestedManyWithoutTaskInput {
+  connect: [ScheduledTaskWhereUniqueInput!]
+  connectOrCreate: [ScheduledTaskCreateOrConnectWithoutTaskInput!]
+  create: [ScheduledTaskCreateWithoutTaskInput!]
+  createMany: ScheduledTaskCreateManyTaskInputEnvelope
+}
+
+input ScheduledTaskCreateOrConnectWithoutTaskInput {
+  create: ScheduledTaskCreateWithoutTaskInput!
+  where: ScheduledTaskWhereUniqueInput!
+}
+
+input ScheduledTaskCreateWithoutTaskInput {
+  datetime: DateTime!
+  done: Boolean
+  order: Int!
+  section: Int!
+}
+
+input ScheduledTaskWhereUniqueInput {
+  id: Int
+}
+
+input TaskCreateManyProjectInput {
+  description: String!
+  id: Int
+  title: String!
+}
+
+input TaskCreateManyProjectInputEnvelope {
+  data: [TaskCreateManyProjectInput!]
+  skipDuplicates: Boolean
+}
+
+input TaskCreateNestedManyWithoutProjectInput {
+  connect: [TaskWhereUniqueInput!]
+  connectOrCreate: [TaskCreateOrConnectWithoutProjectInput!]
+  create: [TaskCreateWithoutProjectInput!]
+  createMany: TaskCreateManyProjectInputEnvelope
+}
+
+input TaskCreateOrConnectWithoutProjectInput {
+  create: TaskCreateWithoutProjectInput!
+  where: TaskWhereUniqueInput!
+}
+
+input TaskCreateWithoutProjectInput {
+  ScheduledTask: ScheduledTaskCreateNestedManyWithoutTaskInput
+  description: String!
+  files: FileCreateNestedManyWithoutTaskInput
+  title: String!
+}
+
+input TaskWhereUniqueInput {
+  id: Int
 }
