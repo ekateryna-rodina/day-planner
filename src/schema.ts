@@ -11,15 +11,33 @@ const Project = objectType({
     t.model.logo();
     t.model.avatars();
     t.model.tasks();
+    t.nonNull.list.nonNull.field("tasks", {
+      type: "Task",
+      resolve: (parent, _, ctx) => {
+        console.log(ctx.prisma.task);
+
+        return ctx.prisma.task.findMany({
+          where: { projectId: parent.id },
+        });
+      },
+    });
   },
 });
 const Task = objectType({
   name: "Task",
   definition(t) {
     t.int("id");
-    t.int("title");
-    t.int("description");
+    t.string("title");
+    t.string("description");
     t.int("projectId");
+    t.field("project", {
+      type: "Project",
+      resolve: (parent, _, ctx) => {
+        return ctx.prisma.project.findUnique({
+          where: { id: parent.projectId },
+        });
+      },
+    });
   },
 });
 const ScheduledTask = objectType({
@@ -31,6 +49,14 @@ const ScheduledTask = objectType({
     t.int("order");
     t.boolean("done");
     t.string("datetime");
+    t.field("task", {
+      type: "Task",
+      resolve: (parent, _, ctx) => {
+        return ctx.prisma.task.findUnique({
+          where: { id: parent.taskId },
+        });
+      },
+    });
   },
 });
 

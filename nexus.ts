@@ -206,10 +206,10 @@ export interface NexusGenObjects {
     taskId?: number | null; // Int
   }
   Task: { // root type
-    description?: number | null; // Int
+    description?: string | null; // String
     id?: number | null; // Int
     projectId?: number | null; // Int
-    title?: number | null; // Int
+    title?: string | null; // String
   }
 }
 
@@ -259,13 +259,15 @@ export interface NexusGenFieldTypes {
     id: number | null; // Int
     order: number | null; // Int
     section: number | null; // Int
+    task: NexusGenRootTypes['Task'] | null; // Task
     taskId: number | null; // Int
   }
   Task: { // field return type
-    description: number | null; // Int
+    description: string | null; // String
     id: number | null; // Int
+    project: NexusGenRootTypes['Project'] | null; // Project
     projectId: number | null; // Int
-    title: number | null; // Int
+    title: string | null; // String
   }
 }
 
@@ -305,13 +307,15 @@ export interface NexusGenFieldTypeNames {
     id: 'Int'
     order: 'Int'
     section: 'Int'
+    task: 'Task'
     taskId: 'Int'
   }
   Task: { // field return type name
-    description: 'Int'
+    description: 'String'
     id: 'Int'
+    project: 'Project'
     projectId: 'Int'
-    title: 'Int'
+    title: 'String'
   }
 }
 
@@ -328,14 +332,6 @@ export interface NexusGenArgTypes {
     }
     createOneTask: { // args
       data: NexusGenInputs['TaskCreateInput']; // TaskCreateInput!
-    }
-  }
-  Project: {
-    tasks: { // args
-      after?: NexusGenInputs['TaskWhereUniqueInput'] | null; // TaskWhereUniqueInput
-      before?: NexusGenInputs['TaskWhereUniqueInput'] | null; // TaskWhereUniqueInput
-      first?: number | null; // Int
-      last?: number | null; // Int
     }
   }
   Query: {

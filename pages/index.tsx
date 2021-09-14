@@ -28,14 +28,33 @@ const Query = gql`
       logo
       avatars
     }
-    tasks{
-
+    tasks {
+      id
+      title
+      description
+      projectId
+      project {
+        name
+        className
+        logo
+      }
     }
-    scheduledTasks{
-
+    scheduledTasks {
+      id
+      taskId
+      section
+      order
+      done
+      datetime
+      task {
+        title
+        description
+      }
     }
-    quickTasks{
-      
+    quickTasks {
+      id
+      description
+      done
     }
   }
 `;
