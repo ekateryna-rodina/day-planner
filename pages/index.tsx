@@ -1,17 +1,21 @@
 import { gql, useQuery } from "@apollo/client";
 import Project from "components/Project";
+import TasksByBlocks from "components/TasksByBlocks";
 import { range } from "lodash";
 import type { NextPage } from "next";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { DragDropContext } from "react-beautiful-dnd";
 import Background from "../components/Background";
 import Hint from "../components/Hint";
 import QuickTasks from "../components/QuickTasks";
 import SubheaderMenu from "../components/SubheaderMenu";
-import TasksByBlocks from "../components/TasksByBlocks";
 import HomeStyles from "../styles/Home.module.scss";
 import { Project as ProjectType } from "../types/project";
-import { QuickTask as QuickTaskType, Task } from "../types/task";
+import {
+  QuickTask,
+  QuickTask as QuickTaskType,
+  ScheduledTask,
+} from "../types/task";
 
 interface IData {
   projects: ProjectType[];
@@ -27,16 +31,9 @@ const Query = gql`
       className
       logo
       avatars
-    }
-    tasks {
-      id
-      title
-      description
-      projectId
-      project {
-        name
-        className
-        logo
+      tasks {
+        title
+        description
       }
     }
     scheduledTasks {
@@ -49,6 +46,10 @@ const Query = gql`
       task {
         title
         description
+        project {
+          className
+          logo
+        }
       }
     }
     quickTasks {
@@ -61,21 +62,34 @@ const Query = gql`
 
 interface IHomeProps {
   projects: ProjectType[];
-  tasks: Task[];
+  scheduledTasks: ScheduledTask[];
   quickTasks: QuickTaskType[];
 }
 
 const queryAttr = "data-rbd-drag-handle-draggable-id";
 const Home: NextPage<IHomeProps> = (props) => {
   const { data, loading, error } = useQuery(Query);
-  const { projects, scheduledTasks, quickTasks } = data || {};
-  console.log(data);
-
-  const [tasksData, setTasks] = useState(scheduledTasks);
-  const [projectsData, setProjects] = useState(projects);
-  const [quickTasksData, setQuicktasks] = useState(quickTasks);
   const [placeholedProps, setPlaceholderProps] = useState({});
-  // const [expanded, setExpanded] = useState();
+
+  const [userData, setUserData] = useState<{
+    quickTasks: QuickTask[];
+    projects: ProjectType[];
+    scheduledTasks: ScheduledTask[];
+  }>({
+    quickTasks: [],
+    scheduledTasks: [],
+    projects: [],
+  });
+
+  useEffect(() => {
+    if (!data) return;
+    setUserData({
+      projects: data.projects,
+      scheduledTasks: data.scheduledTasks,
+      quickTasks: data.quickTasks,
+    });
+  }, [data]);
+
   const isPositionChanged = (destination: any, source: any) => {
     if (!destination || !source) return;
     const isPositionChanged =
@@ -91,7 +105,11 @@ const Home: NextPage<IHomeProps> = (props) => {
       : range(from, to + 1);
     return rangeToUpdate;
   };
-  const reorderTaskPositions = (params: any, tasksToReorder: Task[]) => {
+  const reorderTaskPositions = (
+    params: any,
+    scheduledTasks: ScheduledTask[]
+  ): ScheduledTask[] => {
+    if (!params) return scheduledTasks;
     const { destination, source, draggableId } = params;
     const moveDown = destination.index > source.index;
     const affectedRange = getAffectedTasksRange({
@@ -100,37 +118,44 @@ const Home: NextPage<IHomeProps> = (props) => {
       moveDown,
     });
 
-    let tasks_: Task[] = tasksToReorder;
-    for (let task of tasks_) {
-      if (!affectedRange.includes(task.position)) continue;
-      if (task.id === draggableId) {
-        task.position = destination.index;
-        task.block = +destination.droppableId.split("_")[1];
+    let reordered: ScheduledTask[] = [];
+    reordered = scheduledTasks.map((task) => {
+      if (affectedRange.includes(task.order)) {
+        if (task.id.toString() === draggableId.toString()) {
+          return {
+            ...task,
+            order: destination.index,
+            section: +destination.droppableId.split("_")[1],
+          };
+        } else {
+          return { ...task, order: moveDown ? task.order - 1 : task.order + 1 };
+        }
       } else {
-        task.position = moveDown ? task.position - 1 : task.position + 1;
+        return task;
       }
-    }
-
-    return tasks_;
+    });
+    return reordered;
   };
   const onDragTaskEnd = useCallback(
     (dropResult: any) => {
       const { destination, source } = dropResult;
       if (!isPositionChanged(destination, source)) return;
-      const reordered: Task[] = reorderTaskPositions(
+      const reordered: ScheduledTask[] = reorderTaskPositions(
         {
           destination,
           source,
           draggableId: dropResult.draggableId,
         },
-        tasksData
+        userData.scheduledTasks
       );
 
-      setTasks([...reordered]);
+      if (!reordered) return;
+      console.log(reordered);
+      setUserData({ ...userData, scheduledTasks: reordered });
       // setPlaceholderProps({});
     },
     // eslint-disable-next-line
-    []
+    [userData]
   );
 
   const onDragTaskUpdate = (params: any) => {
@@ -186,8 +211,8 @@ const Home: NextPage<IHomeProps> = (props) => {
               </div>
               <Hint />
               <div className={HomeStyles.projects}>
-                {projects &&
-                  projects.map((p: ProjectType) => (
+                {userData.projects &&
+                  userData.projects.map((p: ProjectType) => (
                     <Project key={p.id} {...p} />
                   ))}
               </div>
@@ -198,7 +223,7 @@ const Home: NextPage<IHomeProps> = (props) => {
                 <div className={HomeStyles.subheader}>September, 14</div>
               </div>
               <TasksByBlocks
-                tasks={scheduledTasks}
+                tasks={userData.scheduledTasks}
                 dndParams={placeholedProps}
               />
             </div>
@@ -210,7 +235,7 @@ const Home: NextPage<IHomeProps> = (props) => {
                 </div>
               </div>
               <div className={HomeStyles.quickTasks}>
-                <QuickTasks quickTasks={quickTasks} />
+                <QuickTasks quickTasks={userData.quickTasks} />
               </div>
             </div>
           </div>

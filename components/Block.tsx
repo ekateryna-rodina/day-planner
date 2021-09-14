@@ -4,25 +4,30 @@ import React, { ReactNode, useEffect, useRef, useState } from "react";
 import { Draggable } from "react-beautiful-dnd";
 import BlockStyles from "../styles/Block.module.scss";
 import TaskStyles from "../styles/Task.module.scss";
-import { Task as TaskType } from "../types/task";
+import { ScheduledTask as ScheduledTaskType } from "../types/task";
 
 interface IBlockProps {
   number: string;
-  tasks: TaskType[];
+  tasks: ScheduledTaskType[];
   isDraggingOver: boolean;
   children?: ReactNode;
 }
 
 // eslint-disable-next-line react/display-name
 const Task = React.forwardRef(
-  (props: TaskType, ref: React.Ref<HTMLDivElement>) => (
-    <div className={`${TaskStyles.taskRow} ${props.className}Vivid`} ref={ref}>
+  (props: ScheduledTaskType, ref: React.Ref<HTMLDivElement>) => (
+    <div
+      className={`${TaskStyles.taskRow} ${props.task.project.className}Vivid`}
+      ref={ref}
+    >
       <div className={TaskStyles.logo}>
-        <Img src={props.logo} layout="fill" />
+        <Img src={props.task.project.logo} layout="fill" />
       </div>
       <div className={TaskStyles.textContainer}>
-        <span className={TaskStyles.projectName}>{props.projectName}</span>
-        <div className={TaskStyles.description}>{props.description}</div>
+        <span className={TaskStyles.projectName}>
+          {props.task.project.name}
+        </span>
+        <div className={TaskStyles.description}>{props.task.description}</div>
       </div>
       <input className={TaskStyles.checkbox} type="checkbox" />
     </div>
@@ -41,28 +46,29 @@ const Block = (props: IBlockProps) => {
     if (!isDraggingOver) return;
     setInterval(() => setHeight(500), 1000);
   }, [isDraggingOver]);
+  if (!tasks.length) return <div>loading</div>;
   return (
     <div className={classNames} ref={ref}>
       <div className={BlockStyles.taskContainer}>
-        {tasks.length &&
-          orderBy(tasks, "position").map((t: TaskType) => (
-            <Draggable draggableId={t.id} key={t.id} index={t.position}>
+        {tasks &&
+          orderBy(tasks, "order").map((t: ScheduledTaskType) => (
+            <Draggable draggableId={t.id.toString()} key={t.id} index={t.order}>
               {(provided) => (
                 <div
-                  className={`${TaskStyles.taskRow} ${t.className}Vivid`}
+                  className={`${TaskStyles.taskRow} ${t.task.project.className}Vivid`}
                   ref={provided.innerRef}
                   {...provided.draggableProps}
                   {...provided.dragHandleProps}
                 >
                   <div className={TaskStyles.logo}>
-                    <Img src={t.logo} layout="fill" />
+                    <Img src={t.task.project.logo} layout="fill" />
                   </div>
                   <div className={TaskStyles.textContainer}>
                     <span className={TaskStyles.projectName}>
-                      {t.projectName}
+                      {t.task.project.name}
                     </span>
                     <div className={TaskStyles.description}>
-                      {t.description}
+                      {t.task.description}
                     </div>
                   </div>
                   <input className={TaskStyles.checkbox} type="checkbox" />

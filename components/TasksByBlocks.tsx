@@ -1,20 +1,20 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { Droppable } from "react-beautiful-dnd";
-import { Block as BlockType, Task } from "../types/task";
+import { Block as BlockType, ScheduledTask } from "../types/task";
 import Block from "./Block";
 
 interface ITasksByBlocks {
-  tasks: Task[];
+  tasks: ScheduledTask[];
   dndParams: {};
 }
 const TasksByBlocks = (props: ITasksByBlocks) => {
   const { tasks, dndParams } = props;
   const [groupedTasks, setGroupedTasks] = useState<BlockType>({});
   const groupTasks = () => {
-    if (!tasks) return;
+    if (!tasks.length) return;
     let blocks: BlockType = {};
-    tasks.forEach((task: Task) => {
-      let block = task.block;
+    tasks.forEach((task: ScheduledTask) => {
+      let block = task.section;
       if (block in blocks) {
         blocks[block].push(task);
       } else {
@@ -29,7 +29,7 @@ const TasksByBlocks = (props: ITasksByBlocks) => {
     groupTasks();
     // eslint-disable-next-line
   }, [tasks]);
-  const _renderBlock = (blockNumber: string, tasks: Task[]) => {
+  const _renderBlock = (blockNumber: string, tasks: ScheduledTask[]) => {
     return (
       <Droppable key={blockNumber} droppableId={`TASKSBYBLOCKS_${blockNumber}`}>
         {(provided, snapshot) => (

@@ -14,8 +14,6 @@ const Project = objectType({
     t.nonNull.list.nonNull.field("tasks", {
       type: "Task",
       resolve: (parent, _, ctx) => {
-        console.log(ctx.prisma.task);
-
         return ctx.prisma.task.findMany({
           where: { projectId: parent.id },
         });

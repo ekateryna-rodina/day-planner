@@ -8,8 +8,6 @@ interface IProjectProps {
   name: string;
   avatars: string[];
   logo: string;
-  // setExpanded: () => void;
-  // expanded: boolean;
 }
 const Project = (props: IProjectProps) => {
   const { className, name, avatars, logo } = props;

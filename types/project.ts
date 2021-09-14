@@ -3,5 +3,5 @@ export type Project = {
   name: string;
   logo: string;
   className: string;
-  avatarUrls: string[];
+  avatars: string[];
 };

@@ -1,16 +1,25 @@
+import { Project } from "./project";
+
 export type Block = {
-  [key: string]: Task[];
+  [key: string]: ScheduledTask[];
 };
 
 export type Task = {
-  id: string;
-  logo: string;
-  projectName: string;
+  id: number;
+  title: string;
   description: string;
+  projectId: number;
+  project: Project;
+};
+
+export type ScheduledTask = {
+  id: string;
+  taskId: number;
+  section: number;
+  order: number;
   done: boolean;
-  className: string;
-  block: number;
-  position: number;
+  datetime: string;
+  task: Task;
 };
 
 export type QuickTask = {

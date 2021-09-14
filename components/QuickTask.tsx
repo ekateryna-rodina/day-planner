@@ -6,8 +6,7 @@ interface IQuickTaskProps {
   description: string;
   done: boolean;
 }
-// standart number of chars per 128px width;
-const originCharsPerWidth = [20, 128];
+
 const QuickTask = (props: IQuickTaskProps) => {
   const { id, description: d, done } = props;
   const [description, setDescription] = useState<string>("");
@@ -18,15 +17,19 @@ const QuickTask = (props: IQuickTaskProps) => {
     if (!Object.keys(e).length) {
       fullId = `quickTaskCheck_${id}`;
     } else {
-      fullId = e.target.id as string;
+      fullId = (
+        (e as React.FormEvent<HTMLInputElement>).target as HTMLInputElement
+      ).id as string;
     }
 
     let textArea = document.getElementById(fullId);
-
+    if (!textArea) return;
     setOffset(textArea!.scrollHeight);
   };
 
-  const descriptionChangeHandler = (e) => {
+  const descriptionChangeHandler = (
+    e: React.ChangeEvent<HTMLTextAreaElement>
+  ) => {
     setDescription(e.target.value);
   };
   useEffect(() => {
