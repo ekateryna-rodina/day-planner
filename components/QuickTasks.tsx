@@ -10,9 +10,10 @@ const QuickTasks = (props: IQuickTasksProps) => {
   const { quickTasks } = props;
   return (
     <div className={QuickTasksStyle.quickTasksBox}>
-      {quickTasks.map((qt: QuickTaskType) => (
-        <QuickTask key={qt.id} {...qt} />
-      ))}
+      {quickTasks &&
+        quickTasks.map((qt: QuickTaskType) => (
+          <QuickTask key={qt.id} {...qt} />
+        ))}
     </div>
   );
 };

@@ -6,13 +6,13 @@ import ProjectTasksList from "./ProjectTasksList";
 interface IProjectProps {
   className: string;
   name: string;
-  avatarUrls: string[];
+  avatars: string[];
   logo: string;
   // setExpanded: () => void;
   // expanded: boolean;
 }
 const Project = (props: IProjectProps) => {
-  const { className, name, avatarUrls, logo } = props;
+  const { className, name, avatars, logo } = props;
   const [expanded, setExpanded] = useState(false);
   const expandHandler = () => {
     setExpanded(!expanded);
@@ -24,11 +24,11 @@ const Project = (props: IProjectProps) => {
         <div className={ProjectStyles.projectBoxContent}>
           <span className={ProjectStyles.projectName}>{name}</span>
           <div className={ProjectStyles.avatarSection}>
-            {/* {avatarUrls.map((a) => (
+            {avatars.map((a) => (
               <div className={ProjectStyles.avatar} key={a}>
                 <Img src={a} layout="fill" />
               </div>
-            ))} */}
+            ))}
             <span className={ProjectStyles.addMember}>
               <i className="fa">&#xf067;</i>
             </span>

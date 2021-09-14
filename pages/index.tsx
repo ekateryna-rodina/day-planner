@@ -2,9 +2,8 @@ import { gql, useQuery } from "@apollo/client";
 import Project from "components/Project";
 import { range } from "lodash";
 import type { NextPage } from "next";
-import React, { useCallback, useState, useEffect } from "react";
+import React, { useCallback, useState } from "react";
 import { DragDropContext } from "react-beautiful-dnd";
-import { initializeApollo } from "src/apollo";
 import Background from "../components/Background";
 import Hint from "../components/Hint";
 import QuickTasks from "../components/QuickTasks";
@@ -27,8 +26,18 @@ const Query = gql`
       name
       className
       logo
+      avatars
     }
-  } 
+    tasks{
+
+    }
+    scheduledTasks{
+
+    }
+    quickTasks{
+      
+    }
+  }
 `;
 
 interface IHomeProps {
@@ -39,25 +48,9 @@ interface IHomeProps {
 
 const queryAttr = "data-rbd-drag-handle-draggable-id";
 const Home: NextPage<IHomeProps> = (props) => {
-
   const { data, loading, error } = useQuery(Query);
-
+  const { projects, scheduledTasks, quickTasks } = data || {};
   console.log(data);
-  //   const [projects, scheduledTasks, quickTasks] = [
-  //   [],
-  //   [],
-  //   []
-  // ];
-  function setProjectsHandler(){
-    if(!data) return;
-     setProjects(data.projects);
-  }
-  // useEffect(setProjectsHandler, [data])
-  const [projects, scheduledTasks, quickTasks] = [
-    data?.projects ?? [],
-    data?.scheduledTasks ?? [],
-    data?.quickTasks ?? [],
-  ];
 
   const [tasksData, setTasks] = useState(scheduledTasks);
   const [projectsData, setProjects] = useState(projects);
@@ -174,9 +167,10 @@ const Home: NextPage<IHomeProps> = (props) => {
               </div>
               <Hint />
               <div className={HomeStyles.projects}>
-                {projectsData && projectsData.map((p: ProjectType) => (
-                  <Project key={p.id} {...p} />
-                ))}
+                {projects &&
+                  projects.map((p: ProjectType) => (
+                    <Project key={p.id} {...p} />
+                  ))}
               </div>
             </div>
             <div className={HomeStyles.tasksPanel}>
@@ -184,7 +178,10 @@ const Home: NextPage<IHomeProps> = (props) => {
                 <h2>Tasks</h2>
                 <div className={HomeStyles.subheader}>September, 14</div>
               </div>
-              <TasksByBlocks tasks={tasksData} dndParams={placeholedProps} />
+              <TasksByBlocks
+                tasks={scheduledTasks}
+                dndParams={placeholedProps}
+              />
             </div>
             <div className={HomeStyles.quickTasksPanel}>
               <div className={HomeStyles.header}>
@@ -194,7 +191,7 @@ const Home: NextPage<IHomeProps> = (props) => {
                 </div>
               </div>
               <div className={HomeStyles.quickTasks}>
-                <QuickTasks quickTasks={quickTasksData} />
+                <QuickTasks quickTasks={quickTasks} />
               </div>
             </div>
           </div>

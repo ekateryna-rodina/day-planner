@@ -52,6 +52,21 @@ export interface NexusGenInputs {
     name: string; // String!
     tasks?: NexusGenInputs['TaskCreateNestedManyWithoutProjectInput'] | null; // TaskCreateNestedManyWithoutProjectInput
   }
+  ProjectCreateNestedOneWithoutTasksInput: { // input type
+    connect?: NexusGenInputs['ProjectWhereUniqueInput'] | null; // ProjectWhereUniqueInput
+    connectOrCreate?: NexusGenInputs['ProjectCreateOrConnectWithoutTasksInput'] | null; // ProjectCreateOrConnectWithoutTasksInput
+    create?: NexusGenInputs['ProjectCreateWithoutTasksInput'] | null; // ProjectCreateWithoutTasksInput
+  }
+  ProjectCreateOrConnectWithoutTasksInput: { // input type
+    create: NexusGenInputs['ProjectCreateWithoutTasksInput']; // ProjectCreateWithoutTasksInput!
+    where: NexusGenInputs['ProjectWhereUniqueInput']; // ProjectWhereUniqueInput!
+  }
+  ProjectCreateWithoutTasksInput: { // input type
+    avatars?: NexusGenInputs['ProjectCreateavatarsInput'] | null; // ProjectCreateavatarsInput
+    className: string; // String!
+    logo: string; // String!
+    name: string; // String!
+  }
   ProjectCreateavatarsInput: { // input type
     set?: string[] | null; // [String!]
   }
@@ -65,6 +80,13 @@ export interface NexusGenInputs {
   }
   QuickTaskWhereUniqueInput: { // input type
     id?: number | null; // Int
+  }
+  ScheduledTaskCreateInput: { // input type
+    datetime: NexusGenScalars['DateTime']; // DateTime!
+    done?: boolean | null; // Boolean
+    order: number; // Int!
+    section: number; // Int!
+    task: NexusGenInputs['TaskCreateNestedOneWithoutScheduledTaskInput']; // TaskCreateNestedOneWithoutScheduledTaskInput!
   }
   ScheduledTaskCreateManyTaskInput: { // input type
     datetime: NexusGenScalars['DateTime']; // DateTime!
@@ -96,6 +118,13 @@ export interface NexusGenInputs {
   ScheduledTaskWhereUniqueInput: { // input type
     id?: number | null; // Int
   }
+  TaskCreateInput: { // input type
+    ScheduledTask?: NexusGenInputs['ScheduledTaskCreateNestedManyWithoutTaskInput'] | null; // ScheduledTaskCreateNestedManyWithoutTaskInput
+    description: string; // String!
+    files?: NexusGenInputs['FileCreateNestedManyWithoutTaskInput'] | null; // FileCreateNestedManyWithoutTaskInput
+    project: NexusGenInputs['ProjectCreateNestedOneWithoutTasksInput']; // ProjectCreateNestedOneWithoutTasksInput!
+    title: string; // String!
+  }
   TaskCreateManyProjectInput: { // input type
     description: string; // String!
     id?: number | null; // Int
@@ -111,14 +140,29 @@ export interface NexusGenInputs {
     create?: NexusGenInputs['TaskCreateWithoutProjectInput'][] | null; // [TaskCreateWithoutProjectInput!]
     createMany?: NexusGenInputs['TaskCreateManyProjectInputEnvelope'] | null; // TaskCreateManyProjectInputEnvelope
   }
+  TaskCreateNestedOneWithoutScheduledTaskInput: { // input type
+    connect?: NexusGenInputs['TaskWhereUniqueInput'] | null; // TaskWhereUniqueInput
+    connectOrCreate?: NexusGenInputs['TaskCreateOrConnectWithoutScheduledTaskInput'] | null; // TaskCreateOrConnectWithoutScheduledTaskInput
+    create?: NexusGenInputs['TaskCreateWithoutScheduledTaskInput'] | null; // TaskCreateWithoutScheduledTaskInput
+  }
   TaskCreateOrConnectWithoutProjectInput: { // input type
     create: NexusGenInputs['TaskCreateWithoutProjectInput']; // TaskCreateWithoutProjectInput!
+    where: NexusGenInputs['TaskWhereUniqueInput']; // TaskWhereUniqueInput!
+  }
+  TaskCreateOrConnectWithoutScheduledTaskInput: { // input type
+    create: NexusGenInputs['TaskCreateWithoutScheduledTaskInput']; // TaskCreateWithoutScheduledTaskInput!
     where: NexusGenInputs['TaskWhereUniqueInput']; // TaskWhereUniqueInput!
   }
   TaskCreateWithoutProjectInput: { // input type
     ScheduledTask?: NexusGenInputs['ScheduledTaskCreateNestedManyWithoutTaskInput'] | null; // ScheduledTaskCreateNestedManyWithoutTaskInput
     description: string; // String!
     files?: NexusGenInputs['FileCreateNestedManyWithoutTaskInput'] | null; // FileCreateNestedManyWithoutTaskInput
+    title: string; // String!
+  }
+  TaskCreateWithoutScheduledTaskInput: { // input type
+    description: string; // String!
+    files?: NexusGenInputs['FileCreateNestedManyWithoutTaskInput'] | null; // FileCreateNestedManyWithoutTaskInput
+    project: NexusGenInputs['ProjectCreateNestedOneWithoutTasksInput']; // ProjectCreateNestedOneWithoutTasksInput!
     title: string; // String!
   }
   TaskWhereUniqueInput: { // input type
@@ -161,6 +205,12 @@ export interface NexusGenObjects {
     section?: number | null; // Int
     taskId?: number | null; // Int
   }
+  Task: { // root type
+    description?: number | null; // Int
+    id?: number | null; // Int
+    projectId?: number | null; // Int
+    title?: number | null; // Int
+  }
 }
 
 export interface NexusGenInterfaces {
@@ -177,6 +227,8 @@ export interface NexusGenFieldTypes {
   Mutation: { // field return type
     createOneProject: NexusGenRootTypes['Project']; // Project!
     createOneQuickTask: NexusGenRootTypes['QuickTask']; // QuickTask!
+    createOneScheduledTask: NexusGenRootTypes['ScheduledTask']; // ScheduledTask!
+    createOneTask: NexusGenRootTypes['Task']; // Task!
   }
   Project: { // field return type
     avatars: string[]; // [String!]!
@@ -184,12 +236,17 @@ export interface NexusGenFieldTypes {
     id: number; // Int!
     logo: string; // String!
     name: string; // String!
+    tasks: NexusGenRootTypes['Task'][]; // [Task!]!
   }
   Query: { // field return type
     project: NexusGenRootTypes['Project'] | null; // Project
     projects: NexusGenRootTypes['Project'][]; // [Project!]!
     quickTask: NexusGenRootTypes['QuickTask'] | null; // QuickTask
     quickTasks: NexusGenRootTypes['QuickTask'][]; // [QuickTask!]!
+    scheduledTask: NexusGenRootTypes['ScheduledTask'] | null; // ScheduledTask
+    scheduledTasks: NexusGenRootTypes['ScheduledTask'][]; // [ScheduledTask!]!
+    task: NexusGenRootTypes['Task'] | null; // Task
+    tasks: NexusGenRootTypes['Task'][]; // [Task!]!
   }
   QuickTask: { // field return type
     description: string | null; // String
@@ -204,12 +261,20 @@ export interface NexusGenFieldTypes {
     section: number | null; // Int
     taskId: number | null; // Int
   }
+  Task: { // field return type
+    description: number | null; // Int
+    id: number | null; // Int
+    projectId: number | null; // Int
+    title: number | null; // Int
+  }
 }
 
 export interface NexusGenFieldTypeNames {
   Mutation: { // field return type name
     createOneProject: 'Project'
     createOneQuickTask: 'QuickTask'
+    createOneScheduledTask: 'ScheduledTask'
+    createOneTask: 'Task'
   }
   Project: { // field return type name
     avatars: 'String'
@@ -217,12 +282,17 @@ export interface NexusGenFieldTypeNames {
     id: 'Int'
     logo: 'String'
     name: 'String'
+    tasks: 'Task'
   }
   Query: { // field return type name
     project: 'Project'
     projects: 'Project'
     quickTask: 'QuickTask'
     quickTasks: 'QuickTask'
+    scheduledTask: 'ScheduledTask'
+    scheduledTasks: 'ScheduledTask'
+    task: 'Task'
+    tasks: 'Task'
   }
   QuickTask: { // field return type name
     description: 'String'
@@ -237,6 +307,12 @@ export interface NexusGenFieldTypeNames {
     section: 'Int'
     taskId: 'Int'
   }
+  Task: { // field return type name
+    description: 'Int'
+    id: 'Int'
+    projectId: 'Int'
+    title: 'Int'
+  }
 }
 
 export interface NexusGenArgTypes {
@@ -246,6 +322,20 @@ export interface NexusGenArgTypes {
     }
     createOneQuickTask: { // args
       data: NexusGenInputs['QuickTaskCreateInput']; // QuickTaskCreateInput!
+    }
+    createOneScheduledTask: { // args
+      data: NexusGenInputs['ScheduledTaskCreateInput']; // ScheduledTaskCreateInput!
+    }
+    createOneTask: { // args
+      data: NexusGenInputs['TaskCreateInput']; // TaskCreateInput!
+    }
+  }
+  Project: {
+    tasks: { // args
+      after?: NexusGenInputs['TaskWhereUniqueInput'] | null; // TaskWhereUniqueInput
+      before?: NexusGenInputs['TaskWhereUniqueInput'] | null; // TaskWhereUniqueInput
+      first?: number | null; // Int
+      last?: number | null; // Int
     }
   }
   Query: {
@@ -264,6 +354,24 @@ export interface NexusGenArgTypes {
     quickTasks: { // args
       after?: NexusGenInputs['QuickTaskWhereUniqueInput'] | null; // QuickTaskWhereUniqueInput
       before?: NexusGenInputs['QuickTaskWhereUniqueInput'] | null; // QuickTaskWhereUniqueInput
+      first?: number | null; // Int
+      last?: number | null; // Int
+    }
+    scheduledTask: { // args
+      where: NexusGenInputs['ScheduledTaskWhereUniqueInput']; // ScheduledTaskWhereUniqueInput!
+    }
+    scheduledTasks: { // args
+      after?: NexusGenInputs['ScheduledTaskWhereUniqueInput'] | null; // ScheduledTaskWhereUniqueInput
+      before?: NexusGenInputs['ScheduledTaskWhereUniqueInput'] | null; // ScheduledTaskWhereUniqueInput
+      first?: number | null; // Int
+      last?: number | null; // Int
+    }
+    task: { // args
+      where: NexusGenInputs['TaskWhereUniqueInput']; // TaskWhereUniqueInput!
+    }
+    tasks: { // args
+      after?: NexusGenInputs['TaskWhereUniqueInput'] | null; // TaskWhereUniqueInput
+      before?: NexusGenInputs['TaskWhereUniqueInput'] | null; // TaskWhereUniqueInput
       first?: number | null; // Int
       last?: number | null; // Int
     }

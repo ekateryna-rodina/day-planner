@@ -39,6 +39,8 @@ input FileWhereUniqueInput {
 type Mutation {
   createOneProject(data: ProjectCreateInput!): Project!
   createOneQuickTask(data: QuickTaskCreateInput!): QuickTask!
+  createOneScheduledTask(data: ScheduledTaskCreateInput!): ScheduledTask!
+  createOneTask(data: TaskCreateInput!): Task!
 }
 
 type Project {
@@ -47,6 +49,7 @@ type Project {
   id: Int!
   logo: String!
   name: String!
+  tasks(after: TaskWhereUniqueInput, before: TaskWhereUniqueInput, first: Int, last: Int): [Task!]!
 }
 
 input ProjectCreateInput {
@@ -55,6 +58,24 @@ input ProjectCreateInput {
   logo: String!
   name: String!
   tasks: TaskCreateNestedManyWithoutProjectInput
+}
+
+input ProjectCreateNestedOneWithoutTasksInput {
+  connect: ProjectWhereUniqueInput
+  connectOrCreate: ProjectCreateOrConnectWithoutTasksInput
+  create: ProjectCreateWithoutTasksInput
+}
+
+input ProjectCreateOrConnectWithoutTasksInput {
+  create: ProjectCreateWithoutTasksInput!
+  where: ProjectWhereUniqueInput!
+}
+
+input ProjectCreateWithoutTasksInput {
+  avatars: ProjectCreateavatarsInput
+  className: String!
+  logo: String!
+  name: String!
 }
 
 input ProjectCreateavatarsInput {
@@ -71,6 +92,10 @@ type Query {
   projects(after: ProjectWhereUniqueInput, before: ProjectWhereUniqueInput, first: Int, last: Int): [Project!]!
   quickTask(where: QuickTaskWhereUniqueInput!): QuickTask
   quickTasks(after: QuickTaskWhereUniqueInput, before: QuickTaskWhereUniqueInput, first: Int, last: Int): [QuickTask!]!
+  scheduledTask(where: ScheduledTaskWhereUniqueInput!): ScheduledTask
+  scheduledTasks(after: ScheduledTaskWhereUniqueInput, before: ScheduledTaskWhereUniqueInput, first: Int, last: Int): [ScheduledTask!]!
+  task(where: TaskWhereUniqueInput!): Task
+  tasks(after: TaskWhereUniqueInput, before: TaskWhereUniqueInput, first: Int, last: Int): [Task!]!
 }
 
 type QuickTask {
@@ -95,6 +120,14 @@ type ScheduledTask {
   order: Int
   section: Int
   taskId: Int
+}
+
+input ScheduledTaskCreateInput {
+  datetime: DateTime!
+  done: Boolean
+  order: Int!
+  section: Int!
+  task: TaskCreateNestedOneWithoutScheduledTaskInput!
 }
 
 input ScheduledTaskCreateManyTaskInput {
@@ -133,6 +166,21 @@ input ScheduledTaskWhereUniqueInput {
   id: Int
 }
 
+type Task {
+  description: Int
+  id: Int
+  projectId: Int
+  title: Int
+}
+
+input TaskCreateInput {
+  ScheduledTask: ScheduledTaskCreateNestedManyWithoutTaskInput
+  description: String!
+  files: FileCreateNestedManyWithoutTaskInput
+  project: ProjectCreateNestedOneWithoutTasksInput!
+  title: String!
+}
+
 input TaskCreateManyProjectInput {
   description: String!
   id: Int
@@ -151,8 +199,19 @@ input TaskCreateNestedManyWithoutProjectInput {
   createMany: TaskCreateManyProjectInputEnvelope
 }
 
+input TaskCreateNestedOneWithoutScheduledTaskInput {
+  connect: TaskWhereUniqueInput
+  connectOrCreate: TaskCreateOrConnectWithoutScheduledTaskInput
+  create: TaskCreateWithoutScheduledTaskInput
+}
+
 input TaskCreateOrConnectWithoutProjectInput {
   create: TaskCreateWithoutProjectInput!
+  where: TaskWhereUniqueInput!
+}
+
+input TaskCreateOrConnectWithoutScheduledTaskInput {
+  create: TaskCreateWithoutScheduledTaskInput!
   where: TaskWhereUniqueInput!
 }
 
@@ -160,6 +219,13 @@ input TaskCreateWithoutProjectInput {
   ScheduledTask: ScheduledTaskCreateNestedManyWithoutTaskInput
   description: String!
   files: FileCreateNestedManyWithoutTaskInput
+  title: String!
+}
+
+input TaskCreateWithoutScheduledTaskInput {
+  description: String!
+  files: FileCreateNestedManyWithoutTaskInput
+  project: ProjectCreateNestedOneWithoutTasksInput!
   title: String!
 }
 
