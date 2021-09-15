@@ -8,6 +8,7 @@ interface ITasksByBlocks {
   dndParams: {};
 }
 const TasksByBlocks = (props: ITasksByBlocks) => {
+  console.log("rerender");
   const { tasks, dndParams } = props;
   const [groupedTasks, setGroupedTasks] = useState<BlockType>({});
   const groupTasks = () => {

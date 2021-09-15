@@ -9,8 +9,14 @@ import Background from "../components/Background";
 import Hint from "../components/Hint";
 import QuickTasks from "../components/QuickTasks";
 import SubheaderMenu from "../components/SubheaderMenu";
+import Section from "../components/Section";
 import HomeStyles from "../styles/Home.module.scss";
 import { Project as ProjectType } from "../types/project";
+import { GetServerSideProps } from "next";
+import { resetServerContext } from "react-beautiful-dnd";
+import initialData from '../data'
+console.log('hello');
+console.log(initialData);
 import {
   QuickTask,
   QuickTask as QuickTaskType,
@@ -23,52 +29,58 @@ interface IData {
   quickTasks: {}[];
 }
 
-const Query = gql`
-  query Query {
-    projects {
-      id
-      name
-      className
-      logo
-      avatars
-      tasks {
-        title
-        description
-      }
-    }
-    scheduledTasks {
-      id
-      taskId
-      section
-      order
-      done
-      datetime
-      task {
-        title
-        description
-        project {
-          className
-          logo
-        }
-      }
-    }
-    quickTasks {
-      id
-      description
-      done
-    }
-  }
-`;
+// const Query = gql`
+//   query Query {
+//     projects {
+//       id
+//       name
+//       className
+//       logo
+//       avatars
+//       tasks {
+//         title
+//         description
+//       }
+//     }
+//     scheduledTasks {
+//       id
+//       taskId
+//       section
+//       order
+//       done
+//       datetime
+//       task {
+//         title
+//         description
+//         project {
+//           className
+//           logo
+//         }
+//       }
+//     }
+//     quickTasks {
+//       id
+//       description
+//       done
+//     }
+//   }
+// `;
 
 interface IHomeProps {
-  projects: ProjectType[];
-  scheduledTasks: ScheduledTask[];
-  quickTasks: QuickTaskType[];
+  data: {
+      projects: ProjectType[];
+      scheduledTasks: ScheduledTask[];
+      quickTasks: QuickTaskType[];
+  }
 }
 
-const queryAttr = "data-rbd-drag-handle-draggable-id";
-const Home: NextPage<IHomeProps> = (props) => {
-  const { data, loading, error } = useQuery(Query);
+// const queryAttr = "data-rbd-drag-handle-draggable-id";
+const Home: NextPage<IHomeProps> = ({data}) => {
+  console.log(data);
+  // const { data, loading, error } = useQuery(Query);
+
+  const [state, setState] = useState(initialData);
+  console.log(state);
   const [placeholedProps, setPlaceholderProps] = useState({});
 
   const [userData, setUserData] = useState<{
@@ -81,14 +93,14 @@ const Home: NextPage<IHomeProps> = (props) => {
     projects: [],
   });
 
-  useEffect(() => {
-    if (!data) return;
-    setUserData({
-      projects: data.projects,
-      scheduledTasks: data.scheduledTasks,
-      quickTasks: data.quickTasks,
-    });
-  }, [data]);
+  // useEffect(() => {
+  //   if (!data) return;
+  //   setUserData({
+  //     projects: data.projects,
+  //     scheduledTasks: data.scheduledTasks,
+  //     quickTasks: data.quickTasks,
+  //   });
+  // }, [data]);
 
   const isPositionChanged = (destination: any, source: any) => {
     if (!destination || !source) return;
@@ -150,48 +162,51 @@ const Home: NextPage<IHomeProps> = (props) => {
       );
 
       if (!reordered) return;
-      console.log(reordered);
-      setUserData({ ...userData, scheduledTasks: reordered });
+
+      setUserData({
+        ...userData,
+        scheduledTasks: reordered,
+      });
       // setPlaceholderProps({});
     },
     // eslint-disable-next-line
     [userData]
   );
 
-  const onDragTaskUpdate = (params: any) => {
-    const { destination, draggableId } = params;
-    if (!destination) return;
-    const { droppableId, index } = destination;
+  // const onDragTaskUpdate = (params: any) => {
+  //   const { destination, draggableId } = params;
+  //   if (!destination) return;
+  //   const { droppableId, index } = destination;
 
-    const domQuery = `[${queryAttr}='${draggableId}']`;
+  //   const domQuery = `[${queryAttr}='${draggableId}']`;
 
-    const domDraggable = document.querySelector(domQuery);
+  //   const domDraggable = document.querySelector(domQuery);
 
-    if (!domDraggable) return;
-    const { clientHeight, clientWidth } = domDraggable;
+  //   if (!domDraggable) return;
+  //   const { clientHeight, clientWidth } = domDraggable;
 
-    const clientY =
-      parseFloat(window.getComputedStyle(domDraggable.parentNode).paddingTop) +
-      [...domDraggable.parentNode.children]
-        .slice(0, index)
-        .reduce((total, curr) => {
-          const style = curr.currentStyle || window.getComputedStyle(curr);
-          const marginBottom = parseFloat(style.marginBottom);
-          return total + curr.clientHeight + marginBottom;
-        }, 0);
+  //   const clientY =
+  //     parseFloat(window.getComputedStyle(domDraggable.parentNode).paddingTop) +
+  //     [...domDraggable.parentNode.children]
+  //       .slice(0, index)
+  //       .reduce((total, curr) => {
+  //         const style = curr.currentStyle || window.getComputedStyle(curr);
+  //         const marginBottom = parseFloat(style.marginBottom);
+  //         return total + curr.clientHeight + marginBottom;
+  //       }, 0);
 
-    setPlaceholderProps({
-      clientHeight,
-      clientWidth,
-      clientY,
-      clientX:
-        parseFloat(
-          window.getComputedStyle(domDraggable.parentNode).paddingLeft
-        ) + 330,
-    });
-  };
+  //   setPlaceholderProps({
+  //     clientHeight,
+  //     clientWidth,
+  //     clientY,
+  //     clientX:
+  //       parseFloat(
+  //         window.getComputedStyle(domDraggable.parentNode).paddingLeft
+  //       ) + 330,
+  //   });
+  // };
 
-  if (loading) return <span>...loading</span>;
+  // if (loading) return <span>...loading</span>;
   return (
     <div>
       <Background />
@@ -199,7 +214,7 @@ const Home: NextPage<IHomeProps> = (props) => {
       <div className={HomeStyles.centeredContainer}>
         <DragDropContext
           onDragEnd={onDragTaskEnd}
-          onDragUpdate={onDragTaskUpdate}
+          // onDragUpdate={onDragTaskUpdate}
         >
           <div className={HomeStyles.content}>
             <div className={HomeStyles.projectsPanel}>
@@ -222,10 +237,13 @@ const Home: NextPage<IHomeProps> = (props) => {
                 <h2>Tasks</h2>
                 <div className={HomeStyles.subheader}>September, 14</div>
               </div>
-              <TasksByBlocks
-                tasks={userData.scheduledTasks}
-                dndParams={placeholedProps}
-              />
+              {
+                  state.sectionIds.map(cId => {
+                  const section = state.sections[cId];
+                  const tasks = section.taskIds.map(t => state.tasks[t]);
+                  return <Section key={section.name} id={cId} section={section} tasks={tasks}/>
+      })
+              }
             </div>
             <div className={HomeStyles.quickTasksPanel}>
               <div className={HomeStyles.header}>
@@ -244,5 +262,13 @@ const Home: NextPage<IHomeProps> = (props) => {
     </div>
   );
 };
+
+export const getServerSideProps: GetServerSideProps = async ({ query }) => {
+
+    resetServerContext()   // <-- CALL RESET SERVER CONTEXT, SERVER SIDE
+
+    return {props: { data : initialData}}
+
+}
 
 export default Home;
