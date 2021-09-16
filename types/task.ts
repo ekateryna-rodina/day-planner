@@ -1,22 +1,32 @@
 import { Project } from "./project";
 
-export type Block = {
-  [key: string]: ScheduledTask[];
+export type ScheduledTasks = {
+  tasks: {
+    [key: string]: ScheduledTask;
+  };
+  sections: {
+    [key: string]: Section;
+  };
+  sectionIds: string[];
+};
+
+export type Section = {
+  id: string;
+  name: string;
+  taskIds: string[];
 };
 
 export type Task = {
-  id: number;
+  id: string;
   title: string;
   description: string;
-  projectId: number;
+  projectId: string;
   project: Project;
 };
 
 export type ScheduledTask = {
   id: string;
-  taskId: number;
-  section: number;
-  order: number;
+  taskId: string;
   done: boolean;
   datetime: string;
   task: Task;

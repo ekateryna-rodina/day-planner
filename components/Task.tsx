@@ -1,28 +1,45 @@
-import React from 'react'
-import {Draggable} from "react-beautiful-dnd";
-
-interface TaskProps{
-    id: string,
-    title: string,
-    description: string,
-    index: number
+import React from "react";
+import { Draggable } from "react-beautiful-dnd";
+import styled from "styled-components";
+import { Project } from "types/project";
+import { Task as TaskType } from "types/task";
+interface TaskProps {
+  id: string;
+  index: number;
+  project: Project;
+  done: boolean;
+  datetime: string;
+  task: TaskType;
 }
 
+const Container = styled.div`
+  margin: 0.5rem;
+  padding: 0.5rem;
+  border: 1px solid gray;
+  background: white;
+`;
 const Task = (props: TaskProps) => {
-      const {id, title, description, index} = props;
-    return (
-         <Draggable draggableId={id} index={index}>
-            {(provided) => (
-            <div
-                {...provided.draggableProps}    
-                {...provided.dragHandleProps} 
-                ref={provided.innerRef}>
-                <span>{title}</span> 
-                <span>{description}</span>  
-            </div>
-            )}
-        </Draggable>       
-    )
-}
+  const {
+    id,
+    task: { title, description },
+    project: { logo },
+    index,
+  } = props;
 
-export default Task
+  return (
+    <Draggable draggableId={id} index={index}>
+      {(provided) => (
+        <Container
+          ref={provided.innerRef}
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
+        >
+          <span>{title}</span>
+          <span>{description}</span>
+        </Container>
+      )}
+    </Draggable>
+  );
+};
+
+export default Task;
