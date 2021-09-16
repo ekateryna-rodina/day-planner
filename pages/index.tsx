@@ -29,6 +29,10 @@ const Home: NextPage<IHomeProps> = ({
   useEffect(() => {
     setwinReady(true);
   }, []);
+  const onDragStartHandler = (start: any) => {
+    console.log(start);
+  };
+
   const onDragTaskEndHandler = (result: any) => {
     const { destination, source, draggableId } = result;
     if (
@@ -38,21 +42,52 @@ const Home: NextPage<IHomeProps> = ({
     ) {
       return;
     }
-    const column = state.scheduledTasks.sections[source.droppableId];
-    const newTaskIds = Array.from(column.taskIds);
-    newTaskIds.splice(source.index, 1);
-    newTaskIds.splice(destination.index, 0, draggableId);
-    const newColumn = {
-      ...column,
-      taskIds: newTaskIds,
+    const start = state.scheduledTasks.sections[source.droppableId];
+    const finish = state.scheduledTasks.sections[destination.droppableId];
+    if (start === finish) {
+      const newTaskIds = Array.from(start.taskIds);
+      newTaskIds.splice(source.index, 1);
+      newTaskIds.splice(destination.index, 0, draggableId);
+      const newColumn = {
+        ...start,
+        taskIds: newTaskIds,
+      };
+      const newState = {
+        ...state,
+        scheduledTasks: {
+          ...state.scheduledTasks,
+          sections: {
+            ...state.scheduledTasks.sections,
+            [newColumn.id]: newColumn,
+          },
+        },
+      };
+      setState(newState);
+      return;
+    }
+
+    const startTaskIds = Array.from(start.taskIds);
+    startTaskIds.splice(source.index, 1);
+    const newStart = {
+      ...start,
+      taskIds: startTaskIds,
     };
+
+    const finishTaskIds = Array.from(finish.taskIds);
+    finishTaskIds.splice(destination.index, 0, draggableId);
+    const newFinish = {
+      ...finish,
+      taskIds: finishTaskIds,
+    };
+
     const newState = {
       ...state,
       scheduledTasks: {
         ...state.scheduledTasks,
         sections: {
           ...state.scheduledTasks.sections,
-          [newColumn.id]: newColumn,
+          [newStart.id]: newStart,
+          [newFinish.id]: newFinish,
         },
       },
     };
@@ -63,7 +98,10 @@ const Home: NextPage<IHomeProps> = ({
       <Background />
 
       <div className={HomeStyles.centeredContainer}>
-        <DragDropContext onDragEnd={onDragTaskEndHandler}>
+        <DragDropContext
+          onDragEnd={onDragTaskEndHandler}
+          onDragStart={onDragStartHandler}
+        >
           <div className={HomeStyles.content}>
             <div className={HomeStyles.projectsPanel}>
               <div className={HomeStyles.header}>

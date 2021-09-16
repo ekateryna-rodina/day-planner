@@ -17,6 +17,7 @@ const Container = styled.div`
   padding: 0.5rem;
   border: 1px solid gray;
   background: white;
+  opacity: ${(props) => (props.isDragging ? "0.5" : "1")};
 `;
 const Task = (props: TaskProps) => {
   const {
@@ -28,11 +29,12 @@ const Task = (props: TaskProps) => {
 
   return (
     <Draggable draggableId={id} index={index}>
-      {(provided) => (
+      {(provided, snapshot) => (
         <Container
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
+          isDragging={snapshot.isDragging}
         >
           <span>{title}</span>
           <span>{description}</span>

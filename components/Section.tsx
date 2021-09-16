@@ -11,15 +11,20 @@ interface SectionProps {
 const Container = styled.div`
   margin: 0.5rem;
   padding: 0.5rem;
-  border: 1px solid red;
+  border: ${(props) =>
+    props.isDraggingOver ? "3px solid red" : "2px solid red"};
   border-radius: 0.2rem;
 `;
 const Section = (props: SectionProps) => {
   const { id, section, scheduledTasks } = props;
   return (
     <Droppable droppableId={id}>
-      {(provided) => (
-        <Container ref={provided.innerRef} {...provided.droppableProps}>
+      {(provided, snapshot) => (
+        <Container
+          ref={provided.innerRef}
+          {...provided.droppableProps}
+          isDraggingOver={snapshot.isDraggingOver}
+        >
           {scheduledTasks.map((scheduledTask: ScheduledTask, index: number) => (
             <Task
               key={scheduledTask.id}
