@@ -8,11 +8,10 @@ interface SectionProps {
   section: {};
   scheduledTasks: ScheduledTask[];
 }
-const Container = styled.div`
+const Container = styled.div<{ isDraggingOver: boolean }>`
   margin: 0.5rem;
   padding: 0.5rem;
-  border: ${(props) =>
-    props.isDraggingOver ? "3px solid red" : "2px solid red"};
+  border: ${(props) => "2px solid rgba(0, 0, 0, 0.1)"};
   border-radius: 0.2rem;
 `;
 const Section = (props: SectionProps) => {
