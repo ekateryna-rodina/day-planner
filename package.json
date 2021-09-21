@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.4.10",
+    "@atlaskit/css-reset": "^6.1.4",
     "@nexus/schema": "^0.20.1",
     "@prisma/client": "^2.30.3",
     "apollo-server-express": "^2.25.2",
@@ -35,6 +36,7 @@
     "react-cx": "^0.1.12",
     "react-dom": "17.0.2",
     "react-icons": "^4.2.0",
+    "react-responsive": "^9.0.0-beta.4",
     "sass": "^1.37.5",
     "styled-components": "^5.3.1"
   },
