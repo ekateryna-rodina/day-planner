@@ -1,3 +1,4 @@
+import { setLightness } from "polished";
 import React, { useState } from "react";
 import styled, { css, keyframes } from "styled-components";
 
@@ -74,7 +75,7 @@ const Button = styled.button`
   -moz-transition: background 0.5s ease-in-out;
 
   &:hover {
-    background: lighten($primary, 10%);
+    background: ${(props) => setLightness(0.7, props.theme.primary)};
   }
 `;
 
