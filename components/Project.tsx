@@ -56,10 +56,11 @@ const Icon = styled.i`
   color: rgba(0, 0, 0, 0.4);
   font-size: 0.5rem;
 `;
-const Chevron = styled.span<{ expanded: boolean }>`
+const Chevron = styled.span<{ expanded: boolean; color: string }>`
   cursor: pointer;
   margin-left: auto;
   transition: all 0.2s;
+  color: ${(props) => setSaturation(0.5, props.theme[props.color])};
   -webkit-transition: all 0.2s;
   -moz-transition: all 0.2s;
   -ms-transition: all 0.2s;
@@ -104,7 +105,12 @@ const Project = (props: IProjectProps) => {
             </AddMember>
           </AvatarsContainer>
         </Content>
-        <Chevron onClick={expandHandler} expanded={expanded} className="fa">
+        <Chevron
+          onClick={expandHandler}
+          color={className}
+          expanded={expanded}
+          className="fa"
+        >
           &#xf054;
         </Chevron>
       </ProjectContainer>
