@@ -8,13 +8,17 @@ import Background from "../components/Background";
 import Hint from "../components/Hint";
 import QuickTasks from "../components/QuickTasks";
 import SubheaderMenu from "../components/SubheaderMenu";
-import initialData from "../data";
+import {
+  initialProjectData,
+  initialQuickTasksData,
+  initialTaskData,
+} from "../data";
 import HomeStyles from "../styles/Home.module.scss";
 import { Project as ProjectType } from "../types/project";
 const Section = dynamic(import("../components/Section"));
 
 interface IHomeProps {
-  projects: ProjectType[];
+  projects: Record<string, ProjectType>;
   scheduledTasks: ScheduledTasks;
   quickTasks: QuickTask[];
 }
@@ -113,8 +117,8 @@ const Home: NextPage<IHomeProps> = ({
               <Hint />
               <div className={HomeStyles.projects}>
                 {state.projects &&
-                  state.projects.map((p: ProjectType) => (
-                    <Project key={p.id} {...p} />
+                  Object.keys(state.projects).map((p: string) => (
+                    <Project key={p} {...state.projects[p]} />
                   ))}
               </div>
             </div>
@@ -160,9 +164,9 @@ const Home: NextPage<IHomeProps> = ({
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   return {
     props: {
-      projects: [],
-      quickTasks: [],
-      scheduledTasks: initialData,
+      projects: initialProjectData,
+      quickTasks: initialQuickTasksData,
+      scheduledTasks: initialTaskData,
     },
   };
 };

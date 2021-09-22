@@ -1,6 +1,50 @@
-import { ScheduledTasks } from "types/task";
+import { Project } from "types/project";
+import { QuickTask, ScheduledTasks } from "types/task";
 
-const initialData: ScheduledTasks = {
+const initialProjectData: Record<string | number, Project> = {
+  "1": {
+    id: "1",
+    className: "blue",
+    name: "Personal portfolio",
+    logo: "https://res.cloudinary.com/kariecloud/image/upload/v1629311147/IMAGE_2021-08-11_18_39_43_r0ituj.jpg",
+    avatars: [
+      "https://res.cloudinary.com/kariecloud/image/upload/v1629311147/IMAGE_2021-08-11_19_31_19_tercal.jpg",
+      "https://res.cloudinary.com/kariecloud/image/upload/v1629311147/IMAGE_2021-08-11_19_31_47_a9fevj.jpg",
+      "https://res.cloudinary.com/kariecloud/image/upload/v1629311147/IMAGE_2021-08-11_19_20_37_owk8e6.jpg",
+    ],
+  },
+  "2": {
+    id: "1",
+    className: "turquoise",
+    name: "Personal portfolio",
+    logo: "https://res.cloudinary.com/kariecloud/image/upload/v1629311147/IMAGE_2021-08-11_20_44_27_v24656.jpg",
+    avatars: [
+      "https://res.cloudinary.com/kariecloud/image/upload/v1629311147/IMAGE_2021-08-11_19_20_37_owk8e6.jpg",
+      "https://res.cloudinary.com/kariecloud/image/upload/v1629311147/IMAGE_2021-08-11_19_28_18_hor5og.jpg",
+    ],
+  },
+};
+
+const initialQuickTasksData: QuickTask[] = [
+  {
+    id: "1",
+    description:
+      "Quick call to Jason regarding tomorrows presentation Quick call to Jason regarding tomorrows presentation",
+    done: false,
+  },
+  {
+    id: "2",
+    description:
+      "Check the mail from Richard Check the mail from RichardCheck the mail from Richard",
+    done: true,
+  },
+  {
+    id: "3",
+    description: "Call my mom Call my momCall my mom",
+    done: false,
+  },
+];
+const initialTaskData: ScheduledTasks = {
   tasks: {
     "1": {
       id: "1",
@@ -105,4 +149,4 @@ const initialData: ScheduledTasks = {
   },
   sectionIds: ["col1", "col2"],
 };
-export default initialData;
+export { initialTaskData, initialProjectData, initialQuickTasksData };
