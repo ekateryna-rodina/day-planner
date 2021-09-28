@@ -29,6 +29,7 @@ const Home: NextPage<IHomeProps> = ({
   quickTasks,
 }) => {
   const [state, setState] = useState({ projects, scheduledTasks, quickTasks });
+  const [newQuickTask, setNewQuickTask] = useState(false);
   const [winReady, setwinReady] = useState(false);
   useEffect(() => {
     setwinReady(true);
@@ -97,6 +98,7 @@ const Home: NextPage<IHomeProps> = ({
     };
     setState(newState);
   };
+
   return (
     <div>
       <Background />
@@ -147,11 +149,16 @@ const Home: NextPage<IHomeProps> = ({
               <div className={HomeStyles.header}>
                 <h2>Quick Tasks</h2>
                 <div className={HomeStyles.subheader}>
-                  My miscellaneous tasks
+                  <span>My miscellaneous tasks</span>
+                  <div>
+                    <button
+                      onClick={() => setNewQuickTask(!newQuickTask)}
+                    ></button>
+                  </div>
                 </div>
               </div>
               <div className={HomeStyles.quickTasks}>
-                <QuickTasks quickTasks={state.quickTasks} />
+                <QuickTasks showNewRow={newQuickTask} />
               </div>
             </div>
           </div>

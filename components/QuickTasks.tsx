@@ -1,19 +1,59 @@
-import React from "react";
+import { gql, useQuery } from "@apollo/client";
+import React, { useEffect } from "react";
 import QuickTasksStyle from "../styles/QuickTask.module.scss";
-import { QuickTask as QuickTaskType } from "../types/task";
 import QuickTask from "./QuickTask";
 
 interface IQuickTasksProps {
-  quickTasks: QuickTaskType[];
+  showNewRow: boolean;
+  setShowNewRow: (value: boolean) => void;
 }
+export const QuickTasksQuery = gql`
+  {
+    quickTasks {
+      id
+      description
+      done
+    }
+  }
+`;
+
 const QuickTasks = (props: IQuickTasksProps) => {
-  const { quickTasks } = props;
+  const { showNewRow, setShowNewRow } = props;
+  console.log(showNewRow);
+  const { data, error, loading } = useQuery(QuickTasksQuery);
+  useEffect(() => {}, []);
+  if (error) {
+    return <div>UPS it is an error</div>;
+  }
+  if (loading) {
+    return <h1>LOADINF</h1>;
+  }
+  const quickTasks: Record<number, any> = data.quickTasks.reduce(
+    (acc: any, item: any) => {
+      acc[item.id] = item;
+      return acc;
+    },
+    {}
+  );
+  let currentQuickTasks = () => {
+    if (showNewRow) {
+      quickTasks[0] = { id: "", description: "", done: false };
+    }
+    return Object.keys(quickTasks).map((qt: string) => (
+      <QuickTask
+        key={qt}
+        {...quickTasks[+qt]}
+        setShowNewRow={setShowNewRow}
+        showNewRow={showNewRow}
+      />
+    ));
+  };
   return (
     <div className={QuickTasksStyle.quickTasksBox}>
-      {quickTasks &&
-        quickTasks.map((qt: QuickTaskType) => (
-          <QuickTask key={qt.id} {...qt} />
-        ))}
+      {/* {showNewRow && (
+        <QuickTask setShowNewRow={setShowNewRow} showNewRow={showNewRow} />
+      )} */}
+      {currentQuickTasks()}
     </div>
   );
 };

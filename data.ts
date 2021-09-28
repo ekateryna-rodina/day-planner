@@ -25,25 +25,25 @@ const initialProjectData: Record<string | number, Project> = {
   },
 };
 
-const initialQuickTasksData: QuickTask[] = [
-  {
+const initialQuickTasksData: Record<string, QuickTask> = {
+  1: {
     id: "1",
     description:
       "Quick call to Jason regarding tomorrows presentation Quick call to Jason regarding tomorrows presentation",
     done: false,
   },
-  {
+  2: {
     id: "2",
     description:
       "Check the mail from Richard Check the mail from RichardCheck the mail from Richard",
     done: true,
   },
-  {
+  3: {
     id: "3",
     description: "Call my mom Call my momCall my mom",
     done: false,
   },
-];
+};
 const initialTaskData: ScheduledTasks = {
   tasks: {
     "1": {
