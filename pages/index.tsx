@@ -1,3 +1,4 @@
+import { gql, useMutation } from "@apollo/client";
 import Project from "components/Project";
 import { GetServerSideProps, NextPage } from "next";
 import dynamic from "next/dynamic";
@@ -6,7 +7,7 @@ import { DragDropContext } from "react-beautiful-dnd";
 import { QuickTask, ScheduledTasks } from "types/task";
 import Background from "../components/Background";
 import Hint from "../components/Hint";
-import QuickTasks from "../components/QuickTasks";
+import QuickTasks, { QuickTasksQuery } from "../components/QuickTasks";
 import SubheaderMenu from "../components/SubheaderMenu";
 import {
   initialProjectData,
@@ -22,6 +23,16 @@ interface IHomeProps {
   scheduledTasks: ScheduledTasks;
   quickTasks: QuickTask[];
 }
+
+const DELETE_MANY_WITH_STATUS_DONE = gql`
+  mutation DeleteManyWithStatusDone {
+    deleteManyQuickTask {
+      id
+      description
+      done
+    }
+  }
+`;
 
 const Home: NextPage<IHomeProps> = ({
   projects,
@@ -99,6 +110,15 @@ const Home: NextPage<IHomeProps> = ({
     setState(newState);
   };
 
+  const [
+    deleteManyQuickTask,
+    { data: dataDeleted, loading: loadingDeleted, error: errorDeleted },
+  ] = useMutation(DELETE_MANY_WITH_STATUS_DONE, {
+    refetchQueries: [QuickTasksQuery, "quickTasks"],
+  });
+  const deleteDoneQuickTasks = () => {
+    deleteManyQuickTask();
+  };
   return (
     <div>
       <Background />
@@ -154,6 +174,7 @@ const Home: NextPage<IHomeProps> = ({
                     <button
                       onClick={() => setNewQuickTask(!newQuickTask)}
                     ></button>
+                    <button onClick={deleteDoneQuickTasks}></button>
                   </div>
                 </div>
               </div>

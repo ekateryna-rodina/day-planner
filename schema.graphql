@@ -2,7 +2,31 @@
 ### Do not make changes to this file directly
 
 
+input BoolFieldUpdateOperationsInput {
+  set: Boolean
+}
+
+input BoolFilter {
+  equals: Boolean
+  not: NestedBoolFilter
+}
+
 scalar DateTime
+
+input DateTimeFieldUpdateOperationsInput {
+  set: DateTime
+}
+
+input DateTimeFilter {
+  equals: DateTime
+  gt: DateTime
+  gte: DateTime
+  in: [DateTime!]
+  lt: DateTime
+  lte: DateTime
+  not: NestedDateTimeFilter
+  notIn: [DateTime!]
+}
 
 input FileCreateManyTaskInput {
   id: Int
@@ -32,8 +56,88 @@ input FileCreateWithoutTaskInput {
   url: String!
 }
 
+input FileScalarWhereInput {
+  AND: [FileScalarWhereInput!]
+  NOT: [FileScalarWhereInput!]
+  OR: [FileScalarWhereInput!]
+  id: IntFilter
+  name: StringFilter
+  taskId: IntNullableFilter
+  url: StringFilter
+}
+
+input FileUpdateManyMutationInput {
+  name: StringFieldUpdateOperationsInput
+  url: StringFieldUpdateOperationsInput
+}
+
+input FileUpdateManyWithWhereWithoutTaskInput {
+  data: FileUpdateManyMutationInput!
+  where: FileScalarWhereInput!
+}
+
+input FileUpdateManyWithoutTaskInput {
+  connect: [FileWhereUniqueInput!]
+  connectOrCreate: [FileCreateOrConnectWithoutTaskInput!]
+  create: [FileCreateWithoutTaskInput!]
+  createMany: FileCreateManyTaskInputEnvelope
+  delete: [FileWhereUniqueInput!]
+  deleteMany: [FileScalarWhereInput!]
+  disconnect: [FileWhereUniqueInput!]
+  set: [FileWhereUniqueInput!]
+  update: [FileUpdateWithWhereUniqueWithoutTaskInput!]
+  updateMany: [FileUpdateManyWithWhereWithoutTaskInput!]
+  upsert: [FileUpsertWithWhereUniqueWithoutTaskInput!]
+}
+
+input FileUpdateWithWhereUniqueWithoutTaskInput {
+  data: FileUpdateWithoutTaskInput!
+  where: FileWhereUniqueInput!
+}
+
+input FileUpdateWithoutTaskInput {
+  name: StringFieldUpdateOperationsInput
+  url: StringFieldUpdateOperationsInput
+}
+
+input FileUpsertWithWhereUniqueWithoutTaskInput {
+  create: FileCreateWithoutTaskInput!
+  update: FileUpdateWithoutTaskInput!
+  where: FileWhereUniqueInput!
+}
+
 input FileWhereUniqueInput {
   id: Int
+}
+
+input IntFieldUpdateOperationsInput {
+  decrement: Int
+  divide: Int
+  increment: Int
+  multiply: Int
+  set: Int
+}
+
+input IntFilter {
+  equals: Int
+  gt: Int
+  gte: Int
+  in: [Int!]
+  lt: Int
+  lte: Int
+  not: NestedIntFilter
+  notIn: [Int!]
+}
+
+input IntNullableFilter {
+  equals: Int
+  gt: Int
+  gte: Int
+  in: [Int!]
+  lt: Int
+  lte: Int
+  not: NestedIntNullableFilter
+  notIn: [Int!]
 }
 
 type Mutation {
@@ -41,6 +145,65 @@ type Mutation {
   createOneQuickTask(data: QuickTaskCreateInput!): QuickTask!
   createOneScheduledTask(data: ScheduledTaskCreateInput!): ScheduledTask!
   createOneTask(data: TaskCreateInput!): Task!
+  deleteManyQuickTask: QuickTask
+  deleteOneQuickTask(where: QuickTaskWhereUniqueInput!): QuickTask
+  deleteOneScheduledTask(where: ScheduledTaskWhereUniqueInput!): ScheduledTask
+  deleteOneTask(where: TaskWhereUniqueInput!): Task
+  updateOneQuickTask(data: QuickTaskUpdateInput!, where: QuickTaskWhereUniqueInput!): QuickTask
+  updateOneScheduledTask(data: ScheduledTaskUpdateInput!, where: ScheduledTaskWhereUniqueInput!): ScheduledTask
+  updateOneTask(data: TaskUpdateInput!, where: TaskWhereUniqueInput!): Task
+}
+
+input NestedBoolFilter {
+  equals: Boolean
+  not: NestedBoolFilter
+}
+
+input NestedDateTimeFilter {
+  equals: DateTime
+  gt: DateTime
+  gte: DateTime
+  in: [DateTime!]
+  lt: DateTime
+  lte: DateTime
+  not: NestedDateTimeFilter
+  notIn: [DateTime!]
+}
+
+input NestedIntFilter {
+  equals: Int
+  gt: Int
+  gte: Int
+  in: [Int!]
+  lt: Int
+  lte: Int
+  not: NestedIntFilter
+  notIn: [Int!]
+}
+
+input NestedIntNullableFilter {
+  equals: Int
+  gt: Int
+  gte: Int
+  in: [Int!]
+  lt: Int
+  lte: Int
+  not: NestedIntNullableFilter
+  notIn: [Int!]
+}
+
+input NestedStringFilter {
+  contains: String
+  endsWith: String
+  equals: String
+  gt: String
+  gte: String
+  in: [String!]
+  lt: String
+  lte: String
+  not: NestedStringFilter
+  notIn: [String!]
+  startsWith: String
 }
 
 type Project {
@@ -82,6 +245,31 @@ input ProjectCreateavatarsInput {
   set: [String!]
 }
 
+input ProjectUpdateOneRequiredWithoutTasksInput {
+  connect: ProjectWhereUniqueInput
+  connectOrCreate: ProjectCreateOrConnectWithoutTasksInput
+  create: ProjectCreateWithoutTasksInput
+  update: ProjectUpdateWithoutTasksInput
+  upsert: ProjectUpsertWithoutTasksInput
+}
+
+input ProjectUpdateWithoutTasksInput {
+  avatars: ProjectUpdateavatarsInput
+  className: StringFieldUpdateOperationsInput
+  logo: StringFieldUpdateOperationsInput
+  name: StringFieldUpdateOperationsInput
+}
+
+input ProjectUpdateavatarsInput {
+  push: String
+  set: [String!]
+}
+
+input ProjectUpsertWithoutTasksInput {
+  create: ProjectCreateWithoutTasksInput!
+  update: ProjectUpdateWithoutTasksInput!
+}
+
 input ProjectWhereUniqueInput {
   id: Int
   name: String
@@ -98,6 +286,11 @@ type Query {
   tasks(after: TaskWhereUniqueInput, before: TaskWhereUniqueInput, first: Int, last: Int): [Task!]!
 }
 
+enum QueryMode {
+  default
+  insensitive
+}
+
 type QuickTask {
   description: String
   done: Boolean
@@ -107,6 +300,11 @@ type QuickTask {
 input QuickTaskCreateInput {
   description: String!
   done: Boolean
+}
+
+input QuickTaskUpdateInput {
+  description: StringFieldUpdateOperationsInput
+  done: BoolFieldUpdateOperationsInput
 }
 
 input QuickTaskWhereUniqueInput {
@@ -163,8 +361,91 @@ input ScheduledTaskCreateWithoutTaskInput {
   section: Int!
 }
 
+input ScheduledTaskScalarWhereInput {
+  AND: [ScheduledTaskScalarWhereInput!]
+  NOT: [ScheduledTaskScalarWhereInput!]
+  OR: [ScheduledTaskScalarWhereInput!]
+  datetime: DateTimeFilter
+  done: BoolFilter
+  id: IntFilter
+  order: IntFilter
+  section: IntFilter
+  taskId: IntFilter
+}
+
+input ScheduledTaskUpdateInput {
+  datetime: DateTimeFieldUpdateOperationsInput
+  done: BoolFieldUpdateOperationsInput
+  order: IntFieldUpdateOperationsInput
+  section: IntFieldUpdateOperationsInput
+  task: TaskUpdateOneRequiredWithoutScheduledTaskInput
+}
+
+input ScheduledTaskUpdateManyMutationInput {
+  datetime: DateTimeFieldUpdateOperationsInput
+  done: BoolFieldUpdateOperationsInput
+  order: IntFieldUpdateOperationsInput
+  section: IntFieldUpdateOperationsInput
+}
+
+input ScheduledTaskUpdateManyWithWhereWithoutTaskInput {
+  data: ScheduledTaskUpdateManyMutationInput!
+  where: ScheduledTaskScalarWhereInput!
+}
+
+input ScheduledTaskUpdateManyWithoutTaskInput {
+  connect: [ScheduledTaskWhereUniqueInput!]
+  connectOrCreate: [ScheduledTaskCreateOrConnectWithoutTaskInput!]
+  create: [ScheduledTaskCreateWithoutTaskInput!]
+  createMany: ScheduledTaskCreateManyTaskInputEnvelope
+  delete: [ScheduledTaskWhereUniqueInput!]
+  deleteMany: [ScheduledTaskScalarWhereInput!]
+  disconnect: [ScheduledTaskWhereUniqueInput!]
+  set: [ScheduledTaskWhereUniqueInput!]
+  update: [ScheduledTaskUpdateWithWhereUniqueWithoutTaskInput!]
+  updateMany: [ScheduledTaskUpdateManyWithWhereWithoutTaskInput!]
+  upsert: [ScheduledTaskUpsertWithWhereUniqueWithoutTaskInput!]
+}
+
+input ScheduledTaskUpdateWithWhereUniqueWithoutTaskInput {
+  data: ScheduledTaskUpdateWithoutTaskInput!
+  where: ScheduledTaskWhereUniqueInput!
+}
+
+input ScheduledTaskUpdateWithoutTaskInput {
+  datetime: DateTimeFieldUpdateOperationsInput
+  done: BoolFieldUpdateOperationsInput
+  order: IntFieldUpdateOperationsInput
+  section: IntFieldUpdateOperationsInput
+}
+
+input ScheduledTaskUpsertWithWhereUniqueWithoutTaskInput {
+  create: ScheduledTaskCreateWithoutTaskInput!
+  update: ScheduledTaskUpdateWithoutTaskInput!
+  where: ScheduledTaskWhereUniqueInput!
+}
+
 input ScheduledTaskWhereUniqueInput {
   id: Int
+}
+
+input StringFieldUpdateOperationsInput {
+  set: String
+}
+
+input StringFilter {
+  contains: String
+  endsWith: String
+  equals: String
+  gt: String
+  gte: String
+  in: [String!]
+  lt: String
+  lte: String
+  mode: QueryMode
+  not: NestedStringFilter
+  notIn: [String!]
+  startsWith: String
 }
 
 type Task {
@@ -229,6 +510,34 @@ input TaskCreateWithoutScheduledTaskInput {
   files: FileCreateNestedManyWithoutTaskInput
   project: ProjectCreateNestedOneWithoutTasksInput!
   title: String!
+}
+
+input TaskUpdateInput {
+  ScheduledTask: ScheduledTaskUpdateManyWithoutTaskInput
+  description: StringFieldUpdateOperationsInput
+  files: FileUpdateManyWithoutTaskInput
+  project: ProjectUpdateOneRequiredWithoutTasksInput
+  title: StringFieldUpdateOperationsInput
+}
+
+input TaskUpdateOneRequiredWithoutScheduledTaskInput {
+  connect: TaskWhereUniqueInput
+  connectOrCreate: TaskCreateOrConnectWithoutScheduledTaskInput
+  create: TaskCreateWithoutScheduledTaskInput
+  update: TaskUpdateWithoutScheduledTaskInput
+  upsert: TaskUpsertWithoutScheduledTaskInput
+}
+
+input TaskUpdateWithoutScheduledTaskInput {
+  description: StringFieldUpdateOperationsInput
+  files: FileUpdateManyWithoutTaskInput
+  project: ProjectUpdateOneRequiredWithoutTasksInput
+  title: StringFieldUpdateOperationsInput
+}
+
+input TaskUpsertWithoutScheduledTaskInput {
+  create: TaskCreateWithoutScheduledTaskInput!
+  update: TaskUpdateWithoutScheduledTaskInput!
 }
 
 input TaskWhereUniqueInput {

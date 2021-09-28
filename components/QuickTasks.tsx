@@ -5,7 +5,6 @@ import QuickTask from "./QuickTask";
 
 interface IQuickTasksProps {
   showNewRow: boolean;
-  setShowNewRow: (value: boolean) => void;
 }
 export const QuickTasksQuery = gql`
   {
@@ -18,7 +17,7 @@ export const QuickTasksQuery = gql`
 `;
 
 const QuickTasks = (props: IQuickTasksProps) => {
-  const { showNewRow, setShowNewRow } = props;
+  const { showNewRow } = props;
   console.log(showNewRow);
   const { data, error, loading } = useQuery(QuickTasksQuery);
   useEffect(() => {}, []);
@@ -40,21 +39,11 @@ const QuickTasks = (props: IQuickTasksProps) => {
       quickTasks[0] = { id: "", description: "", done: false };
     }
     return Object.keys(quickTasks).map((qt: string) => (
-      <QuickTask
-        key={qt}
-        {...quickTasks[+qt]}
-        setShowNewRow={setShowNewRow}
-        showNewRow={showNewRow}
-      />
+      <QuickTask key={qt} {...quickTasks[+qt]} />
     ));
   };
   return (
-    <div className={QuickTasksStyle.quickTasksBox}>
-      {/* {showNewRow && (
-        <QuickTask setShowNewRow={setShowNewRow} showNewRow={showNewRow} />
-      )} */}
-      {currentQuickTasks()}
-    </div>
+    <div className={QuickTasksStyle.quickTasksBox}>{currentQuickTasks()}</div>
   );
 };
 

@@ -40,8 +40,6 @@ interface IQuickTaskProps {
   id: string;
   description: string;
   done: boolean;
-  setShowNewRow: (value: boolean) => void;
-  showNewRow: boolean;
 }
 const CREATE_QUICK_TASK = gql`
   mutation createOneQuickTask($data: QuickTaskCreateInput!) {
@@ -53,14 +51,21 @@ const CREATE_QUICK_TASK = gql`
   }
 `;
 
+const UPDATE_QUICK_TASK = gql`
+  mutation updateOneQuickTask(
+    $data: QuickTaskUpdateInput!
+    $where: QuickTaskWhereUniqueInput!
+  ) {
+    updateOneQuickTask(data: $data, where: $where) {
+      id
+      description
+      done
+    }
+  }
+`;
+
 const QuickTask = (props: Partial<IQuickTaskProps>) => {
-  const {
-    id,
-    description: _description,
-    done,
-    setShowNewRow,
-    showNewRow,
-  } = props;
+  const { id, description: _description, done } = props;
   const [description, setDescription] = useState<string>("");
   const [offset, setOffset] = useState<number>(5);
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
@@ -80,46 +85,55 @@ const QuickTask = (props: Partial<IQuickTaskProps>) => {
     setOffset(textArea!.scrollHeight);
   };
 
-  // {
-  //   update(cache, data){
-
-  //   },
-  // }
   const [
     createOneQuickTask,
-    { data: dataMutated, loading: loadingMutation, error: errorMutation },
+    { data: dataCreated, loading: loadingCreated, error: errorCreated },
   ] = useMutation(CREATE_QUICK_TASK, {
-    refetchQueries: [
-      QuickTasksQuery, // DocumentNode object parsed with gql
-      "quickTasks", // Query name
-    ],
+    refetchQueries: [QuickTasksQuery, "quickTasks"],
   });
   //
-  if (errorMutation) {
-    console.log(JSON.stringify(errorMutation, null, 2));
-  }
+
+  const [
+    updateOneQuickTask,
+    { data: dataUpdated, loading: loadingUpdated, error: errorUpdated },
+  ] = useMutation(UPDATE_QUICK_TASK);
 
   const createQuickTask = (description: string) => {
     if (!description) return;
-    console.log(`creating ${description}`);
+
     createOneQuickTask({
       variables: { data: { description, done: false } },
     });
-    if (setShowNewRow) {
-      setShowNewRow(showNewRow ?? false);
-    }
   };
+
+  const updateQuickTask = (id: number, { description, done }: any) => {
+    updateOneQuickTask({
+      variables: {
+        data: { description: { set: description }, done: { set: done } },
+        where: { id },
+      },
+    });
+  };
+
+  if (errorCreated) {
+    console.log(JSON.stringify(errorCreated, null, 2));
+  }
+  if (errorUpdated) {
+    console.log(JSON.stringify(errorUpdated, null, 2));
+  }
 
   const descriptionChangeHandler = (
     e: React.ChangeEvent<HTMLTextAreaElement>
   ) => {
     setDescription(e.target.value);
+    if (!id) return;
+    updateQuickTask(+id, { description: e.target.value, done: done });
   };
   useEffect(() => {
-    setDescription(_description ?? "");
     if (!_description) {
       textareaRef.current?.focus();
     }
+    setDescription(_description ?? "");
     setTimeout(() => {
       resizeHeight();
     }, 0);
@@ -132,13 +146,17 @@ const QuickTask = (props: Partial<IQuickTaskProps>) => {
     }
     // eslint-disable-next-line
   }, [debouncedValue]);
+  const setDoneHandler = () => {
+    if (!id) return;
+    updateQuickTask(+id, { description: _description, done: !done });
+  };
   return (
     <QuickTaskContainer
       height={offset}
       // style={{ height: `${offset}px` }}
     >
       <label>
-        <NewCheckbox checked={done ?? false} />
+        <NewCheckbox checked={done ?? false} onClick={setDoneHandler} />
         <Textarea
           done={done ?? false}
           height={offset}

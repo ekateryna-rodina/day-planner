@@ -40,12 +40,13 @@ const CheckboxContainer = styled.div`
 `;
 type CheckboxProps = {
   checked: boolean;
+  onClick: () => void;
 };
 const NewCheckbox = (props: CheckboxProps) => {
-  const checked = props.checked;
+  const { checked, onClick } = props;
   return (
     <CheckboxContainer>
-      <HiddenCheckbox />
+      <HiddenCheckbox onClick={onClick} />
       <StyledCheckbox checked={checked}>
         <Icon viewBox="0 0 24 24">
           <polyline points="20 6 9 17 4 12" />

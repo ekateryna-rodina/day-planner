@@ -19,6 +19,26 @@ declare global {
 }
 
 export interface NexusGenInputs {
+  BoolFieldUpdateOperationsInput: { // input type
+    set?: boolean | null; // Boolean
+  }
+  BoolFilter: { // input type
+    equals?: boolean | null; // Boolean
+    not?: NexusGenInputs['NestedBoolFilter'] | null; // NestedBoolFilter
+  }
+  DateTimeFieldUpdateOperationsInput: { // input type
+    set?: NexusGenScalars['DateTime'] | null; // DateTime
+  }
+  DateTimeFilter: { // input type
+    equals?: NexusGenScalars['DateTime'] | null; // DateTime
+    gt?: NexusGenScalars['DateTime'] | null; // DateTime
+    gte?: NexusGenScalars['DateTime'] | null; // DateTime
+    in?: NexusGenScalars['DateTime'][] | null; // [DateTime!]
+    lt?: NexusGenScalars['DateTime'] | null; // DateTime
+    lte?: NexusGenScalars['DateTime'] | null; // DateTime
+    not?: NexusGenInputs['NestedDateTimeFilter'] | null; // NestedDateTimeFilter
+    notIn?: NexusGenScalars['DateTime'][] | null; // [DateTime!]
+  }
   FileCreateManyTaskInput: { // input type
     id?: number | null; // Int
     name: string; // String!
@@ -42,8 +62,125 @@ export interface NexusGenInputs {
     name: string; // String!
     url: string; // String!
   }
+  FileScalarWhereInput: { // input type
+    AND?: NexusGenInputs['FileScalarWhereInput'][] | null; // [FileScalarWhereInput!]
+    NOT?: NexusGenInputs['FileScalarWhereInput'][] | null; // [FileScalarWhereInput!]
+    OR?: NexusGenInputs['FileScalarWhereInput'][] | null; // [FileScalarWhereInput!]
+    id?: NexusGenInputs['IntFilter'] | null; // IntFilter
+    name?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    taskId?: NexusGenInputs['IntNullableFilter'] | null; // IntNullableFilter
+    url?: NexusGenInputs['StringFilter'] | null; // StringFilter
+  }
+  FileUpdateManyMutationInput: { // input type
+    name?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
+    url?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
+  }
+  FileUpdateManyWithWhereWithoutTaskInput: { // input type
+    data: NexusGenInputs['FileUpdateManyMutationInput']; // FileUpdateManyMutationInput!
+    where: NexusGenInputs['FileScalarWhereInput']; // FileScalarWhereInput!
+  }
+  FileUpdateManyWithoutTaskInput: { // input type
+    connect?: NexusGenInputs['FileWhereUniqueInput'][] | null; // [FileWhereUniqueInput!]
+    connectOrCreate?: NexusGenInputs['FileCreateOrConnectWithoutTaskInput'][] | null; // [FileCreateOrConnectWithoutTaskInput!]
+    create?: NexusGenInputs['FileCreateWithoutTaskInput'][] | null; // [FileCreateWithoutTaskInput!]
+    createMany?: NexusGenInputs['FileCreateManyTaskInputEnvelope'] | null; // FileCreateManyTaskInputEnvelope
+    delete?: NexusGenInputs['FileWhereUniqueInput'][] | null; // [FileWhereUniqueInput!]
+    deleteMany?: NexusGenInputs['FileScalarWhereInput'][] | null; // [FileScalarWhereInput!]
+    disconnect?: NexusGenInputs['FileWhereUniqueInput'][] | null; // [FileWhereUniqueInput!]
+    set?: NexusGenInputs['FileWhereUniqueInput'][] | null; // [FileWhereUniqueInput!]
+    update?: NexusGenInputs['FileUpdateWithWhereUniqueWithoutTaskInput'][] | null; // [FileUpdateWithWhereUniqueWithoutTaskInput!]
+    updateMany?: NexusGenInputs['FileUpdateManyWithWhereWithoutTaskInput'][] | null; // [FileUpdateManyWithWhereWithoutTaskInput!]
+    upsert?: NexusGenInputs['FileUpsertWithWhereUniqueWithoutTaskInput'][] | null; // [FileUpsertWithWhereUniqueWithoutTaskInput!]
+  }
+  FileUpdateWithWhereUniqueWithoutTaskInput: { // input type
+    data: NexusGenInputs['FileUpdateWithoutTaskInput']; // FileUpdateWithoutTaskInput!
+    where: NexusGenInputs['FileWhereUniqueInput']; // FileWhereUniqueInput!
+  }
+  FileUpdateWithoutTaskInput: { // input type
+    name?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
+    url?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
+  }
+  FileUpsertWithWhereUniqueWithoutTaskInput: { // input type
+    create: NexusGenInputs['FileCreateWithoutTaskInput']; // FileCreateWithoutTaskInput!
+    update: NexusGenInputs['FileUpdateWithoutTaskInput']; // FileUpdateWithoutTaskInput!
+    where: NexusGenInputs['FileWhereUniqueInput']; // FileWhereUniqueInput!
+  }
   FileWhereUniqueInput: { // input type
     id?: number | null; // Int
+  }
+  IntFieldUpdateOperationsInput: { // input type
+    decrement?: number | null; // Int
+    divide?: number | null; // Int
+    increment?: number | null; // Int
+    multiply?: number | null; // Int
+    set?: number | null; // Int
+  }
+  IntFilter: { // input type
+    equals?: number | null; // Int
+    gt?: number | null; // Int
+    gte?: number | null; // Int
+    in?: number[] | null; // [Int!]
+    lt?: number | null; // Int
+    lte?: number | null; // Int
+    not?: NexusGenInputs['NestedIntFilter'] | null; // NestedIntFilter
+    notIn?: number[] | null; // [Int!]
+  }
+  IntNullableFilter: { // input type
+    equals?: number | null; // Int
+    gt?: number | null; // Int
+    gte?: number | null; // Int
+    in?: number[] | null; // [Int!]
+    lt?: number | null; // Int
+    lte?: number | null; // Int
+    not?: NexusGenInputs['NestedIntNullableFilter'] | null; // NestedIntNullableFilter
+    notIn?: number[] | null; // [Int!]
+  }
+  NestedBoolFilter: { // input type
+    equals?: boolean | null; // Boolean
+    not?: NexusGenInputs['NestedBoolFilter'] | null; // NestedBoolFilter
+  }
+  NestedDateTimeFilter: { // input type
+    equals?: NexusGenScalars['DateTime'] | null; // DateTime
+    gt?: NexusGenScalars['DateTime'] | null; // DateTime
+    gte?: NexusGenScalars['DateTime'] | null; // DateTime
+    in?: NexusGenScalars['DateTime'][] | null; // [DateTime!]
+    lt?: NexusGenScalars['DateTime'] | null; // DateTime
+    lte?: NexusGenScalars['DateTime'] | null; // DateTime
+    not?: NexusGenInputs['NestedDateTimeFilter'] | null; // NestedDateTimeFilter
+    notIn?: NexusGenScalars['DateTime'][] | null; // [DateTime!]
+  }
+  NestedIntFilter: { // input type
+    equals?: number | null; // Int
+    gt?: number | null; // Int
+    gte?: number | null; // Int
+    in?: number[] | null; // [Int!]
+    lt?: number | null; // Int
+    lte?: number | null; // Int
+    not?: NexusGenInputs['NestedIntFilter'] | null; // NestedIntFilter
+    notIn?: number[] | null; // [Int!]
+  }
+  NestedIntNullableFilter: { // input type
+    equals?: number | null; // Int
+    gt?: number | null; // Int
+    gte?: number | null; // Int
+    in?: number[] | null; // [Int!]
+    lt?: number | null; // Int
+    lte?: number | null; // Int
+    not?: NexusGenInputs['NestedIntNullableFilter'] | null; // NestedIntNullableFilter
+    notIn?: number[] | null; // [Int!]
+  }
+  NestedStringFilter: { // input type
+    contains?: string | null; // String
+    endsWith?: string | null; // String
+    equals?: string | null; // String
+    gt?: string | null; // String
+    gte?: string | null; // String
+    in?: string[] | null; // [String!]
+    lt?: string | null; // String
+    lte?: string | null; // String
+    not?: NexusGenInputs['NestedStringFilter'] | null; // NestedStringFilter
+    notIn?: string[] | null; // [String!]
+    startsWith?: string | null; // String
   }
   ProjectCreateInput: { // input type
     avatars?: NexusGenInputs['ProjectCreateavatarsInput'] | null; // ProjectCreateavatarsInput
@@ -70,6 +207,27 @@ export interface NexusGenInputs {
   ProjectCreateavatarsInput: { // input type
     set?: string[] | null; // [String!]
   }
+  ProjectUpdateOneRequiredWithoutTasksInput: { // input type
+    connect?: NexusGenInputs['ProjectWhereUniqueInput'] | null; // ProjectWhereUniqueInput
+    connectOrCreate?: NexusGenInputs['ProjectCreateOrConnectWithoutTasksInput'] | null; // ProjectCreateOrConnectWithoutTasksInput
+    create?: NexusGenInputs['ProjectCreateWithoutTasksInput'] | null; // ProjectCreateWithoutTasksInput
+    update?: NexusGenInputs['ProjectUpdateWithoutTasksInput'] | null; // ProjectUpdateWithoutTasksInput
+    upsert?: NexusGenInputs['ProjectUpsertWithoutTasksInput'] | null; // ProjectUpsertWithoutTasksInput
+  }
+  ProjectUpdateWithoutTasksInput: { // input type
+    avatars?: NexusGenInputs['ProjectUpdateavatarsInput'] | null; // ProjectUpdateavatarsInput
+    className?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
+    logo?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
+    name?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
+  }
+  ProjectUpdateavatarsInput: { // input type
+    push?: string | null; // String
+    set?: string[] | null; // [String!]
+  }
+  ProjectUpsertWithoutTasksInput: { // input type
+    create: NexusGenInputs['ProjectCreateWithoutTasksInput']; // ProjectCreateWithoutTasksInput!
+    update: NexusGenInputs['ProjectUpdateWithoutTasksInput']; // ProjectUpdateWithoutTasksInput!
+  }
   ProjectWhereUniqueInput: { // input type
     id?: number | null; // Int
     name?: string | null; // String
@@ -77,6 +235,10 @@ export interface NexusGenInputs {
   QuickTaskCreateInput: { // input type
     description: string; // String!
     done?: boolean | null; // Boolean
+  }
+  QuickTaskUpdateInput: { // input type
+    description?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
+    done?: NexusGenInputs['BoolFieldUpdateOperationsInput'] | null; // BoolFieldUpdateOperationsInput
   }
   QuickTaskWhereUniqueInput: { // input type
     id?: number | null; // Int
@@ -115,8 +277,81 @@ export interface NexusGenInputs {
     order: number; // Int!
     section: number; // Int!
   }
+  ScheduledTaskScalarWhereInput: { // input type
+    AND?: NexusGenInputs['ScheduledTaskScalarWhereInput'][] | null; // [ScheduledTaskScalarWhereInput!]
+    NOT?: NexusGenInputs['ScheduledTaskScalarWhereInput'][] | null; // [ScheduledTaskScalarWhereInput!]
+    OR?: NexusGenInputs['ScheduledTaskScalarWhereInput'][] | null; // [ScheduledTaskScalarWhereInput!]
+    datetime?: NexusGenInputs['DateTimeFilter'] | null; // DateTimeFilter
+    done?: NexusGenInputs['BoolFilter'] | null; // BoolFilter
+    id?: NexusGenInputs['IntFilter'] | null; // IntFilter
+    order?: NexusGenInputs['IntFilter'] | null; // IntFilter
+    section?: NexusGenInputs['IntFilter'] | null; // IntFilter
+    taskId?: NexusGenInputs['IntFilter'] | null; // IntFilter
+  }
+  ScheduledTaskUpdateInput: { // input type
+    datetime?: NexusGenInputs['DateTimeFieldUpdateOperationsInput'] | null; // DateTimeFieldUpdateOperationsInput
+    done?: NexusGenInputs['BoolFieldUpdateOperationsInput'] | null; // BoolFieldUpdateOperationsInput
+    order?: NexusGenInputs['IntFieldUpdateOperationsInput'] | null; // IntFieldUpdateOperationsInput
+    section?: NexusGenInputs['IntFieldUpdateOperationsInput'] | null; // IntFieldUpdateOperationsInput
+    task?: NexusGenInputs['TaskUpdateOneRequiredWithoutScheduledTaskInput'] | null; // TaskUpdateOneRequiredWithoutScheduledTaskInput
+  }
+  ScheduledTaskUpdateManyMutationInput: { // input type
+    datetime?: NexusGenInputs['DateTimeFieldUpdateOperationsInput'] | null; // DateTimeFieldUpdateOperationsInput
+    done?: NexusGenInputs['BoolFieldUpdateOperationsInput'] | null; // BoolFieldUpdateOperationsInput
+    order?: NexusGenInputs['IntFieldUpdateOperationsInput'] | null; // IntFieldUpdateOperationsInput
+    section?: NexusGenInputs['IntFieldUpdateOperationsInput'] | null; // IntFieldUpdateOperationsInput
+  }
+  ScheduledTaskUpdateManyWithWhereWithoutTaskInput: { // input type
+    data: NexusGenInputs['ScheduledTaskUpdateManyMutationInput']; // ScheduledTaskUpdateManyMutationInput!
+    where: NexusGenInputs['ScheduledTaskScalarWhereInput']; // ScheduledTaskScalarWhereInput!
+  }
+  ScheduledTaskUpdateManyWithoutTaskInput: { // input type
+    connect?: NexusGenInputs['ScheduledTaskWhereUniqueInput'][] | null; // [ScheduledTaskWhereUniqueInput!]
+    connectOrCreate?: NexusGenInputs['ScheduledTaskCreateOrConnectWithoutTaskInput'][] | null; // [ScheduledTaskCreateOrConnectWithoutTaskInput!]
+    create?: NexusGenInputs['ScheduledTaskCreateWithoutTaskInput'][] | null; // [ScheduledTaskCreateWithoutTaskInput!]
+    createMany?: NexusGenInputs['ScheduledTaskCreateManyTaskInputEnvelope'] | null; // ScheduledTaskCreateManyTaskInputEnvelope
+    delete?: NexusGenInputs['ScheduledTaskWhereUniqueInput'][] | null; // [ScheduledTaskWhereUniqueInput!]
+    deleteMany?: NexusGenInputs['ScheduledTaskScalarWhereInput'][] | null; // [ScheduledTaskScalarWhereInput!]
+    disconnect?: NexusGenInputs['ScheduledTaskWhereUniqueInput'][] | null; // [ScheduledTaskWhereUniqueInput!]
+    set?: NexusGenInputs['ScheduledTaskWhereUniqueInput'][] | null; // [ScheduledTaskWhereUniqueInput!]
+    update?: NexusGenInputs['ScheduledTaskUpdateWithWhereUniqueWithoutTaskInput'][] | null; // [ScheduledTaskUpdateWithWhereUniqueWithoutTaskInput!]
+    updateMany?: NexusGenInputs['ScheduledTaskUpdateManyWithWhereWithoutTaskInput'][] | null; // [ScheduledTaskUpdateManyWithWhereWithoutTaskInput!]
+    upsert?: NexusGenInputs['ScheduledTaskUpsertWithWhereUniqueWithoutTaskInput'][] | null; // [ScheduledTaskUpsertWithWhereUniqueWithoutTaskInput!]
+  }
+  ScheduledTaskUpdateWithWhereUniqueWithoutTaskInput: { // input type
+    data: NexusGenInputs['ScheduledTaskUpdateWithoutTaskInput']; // ScheduledTaskUpdateWithoutTaskInput!
+    where: NexusGenInputs['ScheduledTaskWhereUniqueInput']; // ScheduledTaskWhereUniqueInput!
+  }
+  ScheduledTaskUpdateWithoutTaskInput: { // input type
+    datetime?: NexusGenInputs['DateTimeFieldUpdateOperationsInput'] | null; // DateTimeFieldUpdateOperationsInput
+    done?: NexusGenInputs['BoolFieldUpdateOperationsInput'] | null; // BoolFieldUpdateOperationsInput
+    order?: NexusGenInputs['IntFieldUpdateOperationsInput'] | null; // IntFieldUpdateOperationsInput
+    section?: NexusGenInputs['IntFieldUpdateOperationsInput'] | null; // IntFieldUpdateOperationsInput
+  }
+  ScheduledTaskUpsertWithWhereUniqueWithoutTaskInput: { // input type
+    create: NexusGenInputs['ScheduledTaskCreateWithoutTaskInput']; // ScheduledTaskCreateWithoutTaskInput!
+    update: NexusGenInputs['ScheduledTaskUpdateWithoutTaskInput']; // ScheduledTaskUpdateWithoutTaskInput!
+    where: NexusGenInputs['ScheduledTaskWhereUniqueInput']; // ScheduledTaskWhereUniqueInput!
+  }
   ScheduledTaskWhereUniqueInput: { // input type
     id?: number | null; // Int
+  }
+  StringFieldUpdateOperationsInput: { // input type
+    set?: string | null; // String
+  }
+  StringFilter: { // input type
+    contains?: string | null; // String
+    endsWith?: string | null; // String
+    equals?: string | null; // String
+    gt?: string | null; // String
+    gte?: string | null; // String
+    in?: string[] | null; // [String!]
+    lt?: string | null; // String
+    lte?: string | null; // String
+    mode?: NexusGenEnums['QueryMode'] | null; // QueryMode
+    not?: NexusGenInputs['NestedStringFilter'] | null; // NestedStringFilter
+    notIn?: string[] | null; // [String!]
+    startsWith?: string | null; // String
   }
   TaskCreateInput: { // input type
     ScheduledTask?: NexusGenInputs['ScheduledTaskCreateNestedManyWithoutTaskInput'] | null; // ScheduledTaskCreateNestedManyWithoutTaskInput
@@ -165,12 +400,37 @@ export interface NexusGenInputs {
     project: NexusGenInputs['ProjectCreateNestedOneWithoutTasksInput']; // ProjectCreateNestedOneWithoutTasksInput!
     title: string; // String!
   }
+  TaskUpdateInput: { // input type
+    ScheduledTask?: NexusGenInputs['ScheduledTaskUpdateManyWithoutTaskInput'] | null; // ScheduledTaskUpdateManyWithoutTaskInput
+    description?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
+    files?: NexusGenInputs['FileUpdateManyWithoutTaskInput'] | null; // FileUpdateManyWithoutTaskInput
+    project?: NexusGenInputs['ProjectUpdateOneRequiredWithoutTasksInput'] | null; // ProjectUpdateOneRequiredWithoutTasksInput
+    title?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
+  }
+  TaskUpdateOneRequiredWithoutScheduledTaskInput: { // input type
+    connect?: NexusGenInputs['TaskWhereUniqueInput'] | null; // TaskWhereUniqueInput
+    connectOrCreate?: NexusGenInputs['TaskCreateOrConnectWithoutScheduledTaskInput'] | null; // TaskCreateOrConnectWithoutScheduledTaskInput
+    create?: NexusGenInputs['TaskCreateWithoutScheduledTaskInput'] | null; // TaskCreateWithoutScheduledTaskInput
+    update?: NexusGenInputs['TaskUpdateWithoutScheduledTaskInput'] | null; // TaskUpdateWithoutScheduledTaskInput
+    upsert?: NexusGenInputs['TaskUpsertWithoutScheduledTaskInput'] | null; // TaskUpsertWithoutScheduledTaskInput
+  }
+  TaskUpdateWithoutScheduledTaskInput: { // input type
+    description?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
+    files?: NexusGenInputs['FileUpdateManyWithoutTaskInput'] | null; // FileUpdateManyWithoutTaskInput
+    project?: NexusGenInputs['ProjectUpdateOneRequiredWithoutTasksInput'] | null; // ProjectUpdateOneRequiredWithoutTasksInput
+    title?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
+  }
+  TaskUpsertWithoutScheduledTaskInput: { // input type
+    create: NexusGenInputs['TaskCreateWithoutScheduledTaskInput']; // TaskCreateWithoutScheduledTaskInput!
+    update: NexusGenInputs['TaskUpdateWithoutScheduledTaskInput']; // TaskUpdateWithoutScheduledTaskInput!
+  }
   TaskWhereUniqueInput: { // input type
     id?: number | null; // Int
   }
 }
 
 export interface NexusGenEnums {
+  QueryMode: "default" | "insensitive"
 }
 
 export interface NexusGenScalars {
@@ -221,7 +481,7 @@ export interface NexusGenUnions {
 
 export type NexusGenRootTypes = NexusGenObjects
 
-export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars
+export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars & NexusGenEnums
 
 export interface NexusGenFieldTypes {
   Mutation: { // field return type
@@ -229,6 +489,13 @@ export interface NexusGenFieldTypes {
     createOneQuickTask: NexusGenRootTypes['QuickTask']; // QuickTask!
     createOneScheduledTask: NexusGenRootTypes['ScheduledTask']; // ScheduledTask!
     createOneTask: NexusGenRootTypes['Task']; // Task!
+    deleteManyQuickTask: NexusGenRootTypes['QuickTask'] | null; // QuickTask
+    deleteOneQuickTask: NexusGenRootTypes['QuickTask'] | null; // QuickTask
+    deleteOneScheduledTask: NexusGenRootTypes['ScheduledTask'] | null; // ScheduledTask
+    deleteOneTask: NexusGenRootTypes['Task'] | null; // Task
+    updateOneQuickTask: NexusGenRootTypes['QuickTask'] | null; // QuickTask
+    updateOneScheduledTask: NexusGenRootTypes['ScheduledTask'] | null; // ScheduledTask
+    updateOneTask: NexusGenRootTypes['Task'] | null; // Task
   }
   Project: { // field return type
     avatars: string[]; // [String!]!
@@ -277,6 +544,13 @@ export interface NexusGenFieldTypeNames {
     createOneQuickTask: 'QuickTask'
     createOneScheduledTask: 'ScheduledTask'
     createOneTask: 'Task'
+    deleteManyQuickTask: 'QuickTask'
+    deleteOneQuickTask: 'QuickTask'
+    deleteOneScheduledTask: 'ScheduledTask'
+    deleteOneTask: 'Task'
+    updateOneQuickTask: 'QuickTask'
+    updateOneScheduledTask: 'ScheduledTask'
+    updateOneTask: 'Task'
   }
   Project: { // field return type name
     avatars: 'String'
@@ -333,6 +607,27 @@ export interface NexusGenArgTypes {
     createOneTask: { // args
       data: NexusGenInputs['TaskCreateInput']; // TaskCreateInput!
     }
+    deleteOneQuickTask: { // args
+      where: NexusGenInputs['QuickTaskWhereUniqueInput']; // QuickTaskWhereUniqueInput!
+    }
+    deleteOneScheduledTask: { // args
+      where: NexusGenInputs['ScheduledTaskWhereUniqueInput']; // ScheduledTaskWhereUniqueInput!
+    }
+    deleteOneTask: { // args
+      where: NexusGenInputs['TaskWhereUniqueInput']; // TaskWhereUniqueInput!
+    }
+    updateOneQuickTask: { // args
+      data: NexusGenInputs['QuickTaskUpdateInput']; // QuickTaskUpdateInput!
+      where: NexusGenInputs['QuickTaskWhereUniqueInput']; // QuickTaskWhereUniqueInput!
+    }
+    updateOneScheduledTask: { // args
+      data: NexusGenInputs['ScheduledTaskUpdateInput']; // ScheduledTaskUpdateInput!
+      where: NexusGenInputs['ScheduledTaskWhereUniqueInput']; // ScheduledTaskWhereUniqueInput!
+    }
+    updateOneTask: { // args
+      data: NexusGenInputs['TaskUpdateInput']; // TaskUpdateInput!
+      where: NexusGenInputs['TaskWhereUniqueInput']; // TaskWhereUniqueInput!
+    }
   }
   Query: {
     project: { // args
@@ -384,7 +679,7 @@ export type NexusGenObjectNames = keyof NexusGenObjects;
 
 export type NexusGenInputNames = keyof NexusGenInputs;
 
-export type NexusGenEnumNames = never;
+export type NexusGenEnumNames = keyof NexusGenEnums;
 
 export type NexusGenInterfaceNames = never;
 

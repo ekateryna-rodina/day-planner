@@ -85,6 +85,26 @@ const Mutation = mutationType({
     t.crud.createOneQuickTask();
     t.crud.createOneTask();
     t.crud.createOneScheduledTask();
+
+    t.crud.deleteOneQuickTask();
+    // t.crud.deleteManyQuickTask();
+    t.crud.updateOneQuickTask();
+
+    t.crud.updateOneScheduledTask();
+    t.crud.deleteOneScheduledTask();
+
+    t.crud.updateOneTask();
+    t.crud.deleteOneTask();
+
+    t.field("deleteManyQuickTask", {
+      type: QuickTask,
+      resolve: async (parent, args, context) => {
+        const post = await context.prisma.quickTask.deleteMany({
+          where: { done: true },
+        });
+        return post;
+      },
+    });
   },
 });
 
